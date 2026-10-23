@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>distance vector routing | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="distance vector routing" />
+<meta name="author" content="Charles Reiss" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/dv.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/dv.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="distance vector routing" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss"},"headline":"distance vector routing","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/dv.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a>
+<ul>
+<li><a href="#part-1-distance-vector"
+id="toc-part-1-distance-vector"><span
+class="toc-section-number">1.1</span> Part 1: distance vector</a></li>
+<li><a href="#part-2-handling-addingremoving-links"
+id="toc-part-2-handling-addingremoving-links"><span
+class="toc-section-number">1.2</span> Part 2: handling adding/removing
+links:</a></li>
+<li><a href="#submission" id="toc-submission"><span
+class="toc-section-number">1.3</span> Submission</a></li>
+</ul></li>
+<li><a href="#hints" id="toc-hints"><span
+class="toc-section-number">2</span> Hints</a></li>
+</ul></nav>
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<ol type="1">
+<li>Download the skeleton code <a href="files/dv-skeleton.tgz">here</a>
+[last updated 23 Oct 2024]</li>
+</ol>
+<h2 data-number="1.1" id="part-1-distance-vector"><span
+class="header-section-number">1.1</span> Part 1: distance vector</h2>
+<ol start="2" type="1">
+<li><p>Edit <code>entity.py</code> to implement a distributed distance
+vector algorithm using distributed Bellman-Ford, like is described in
+section <a
+href="https://book.systemsapproach.org/internetworking/routing.html">3.4.2</a>
+of <em>Computer Networks: A Systems Approach</em>.</p>
+<p>For the first part of this assignment, we will not handle updates a
+node’s neighbors (like from a link failing); we will just produce an
+initial set of routes.</p>
+<p>Our simulator will construct an instance of the <code>Entity</code>
+class to represent each router (<q>entity</q>) on a simulated network.
+Each Entity will be assigned a 0-based index. The Entity has several
+methods which will be called by our simulation. <code>entity.py</code>
+has docstrings for each these methods.</p>
+<p>For this part, you will need to change the
+<code>initialize_costs</code> and <code>update</code> methods.</p>
+<p>We will also use the <code>__init__</code>,
+<code>forward_next_hop</code>, and <code>get_all_costs</code> methods,
+but I expect most students will not have a reason to modify the version
+of these methods supplied with the skeleton code.</p>
+<p>Provided that it does not change the interface the simulator expects
+to use, you are welcome to modify any methods of the <code>Entity</code>
+class and add new utility methods and functions.</p>
+<p>In the simulation, Entitys can send packets to each other. This is
+done by returning those packets to the simulation as the return value of
+its methods. (Unlike with sockets or some other assignments, your code
+will not call a function to send a packet.) Your Entity instances should
+not other communicate with each other except by sending packets.</p>
+<p>The simulation will first call the <code>initialize_costs</code>
+method of each entity with an array of its neighbors. This method will
+return a list of packets to sent. The simulator will simulate these
+packets being transmitted to other entities with some delay. When a
+packet is received by another entity. A packet will be received by
+calling an entity’s <code>update</code> method with a copy of the
+packet. If the <code>update</code> method returns more packets to send,
+the simulator will simulate those being sent. This simulator will keep
+going until no new packets are produced.</p></li>
+<li><p>Test your submission by:</p>
+<ul>
+<li><p>using or modifying <code>sample_simple.py</code> to run the
+simulator by hand. Comments in this file indicate the expected output.
+Note that you can change the debug level passed to it.</p></li>
+<li><p>running <code>python3 test.py --exclude-link-changes</code>.
+These tests should be more thorough than <code>sample_simple.py</code>.
+You can obtain more information about the test cases themselves
+using</p>
+<pre><code> python3 test.py --verbose-tests --exclude-link-changes</code></pre>
+<p>and can run the test with less debug output using:</p>
+<pre><code> python3 test.py --debug 0 --exclude-link-changes</code></pre>
+<p>You can also combine these options. You can also temporarily edit the
+TESTS array in <code>test.py</code> to change what is tested or to copy
+the test cases into a file like <code>sample_simple.py</code></p></li>
+</ul></li>
+</ol>
+<h2 data-number="1.2" id="part-2-handling-addingremoving-links"><span
+class="header-section-number">1.2</span> Part 2: handling
+adding/removing links:</h2>
+<ol type="1">
+<li><p>Implement <code>add_neighbor</code>, <code>delete_neighbor</code>
+and <code>periodic_update</code> in <code>entity.py</code>.</p>
+<p>You do not need to handle cases which would involve the <q>count to
+infinity</q> problem. If you choose, however, you may assume that the
+total cost of a route will never exceed 100r</p>
+<p>To handle routes becoming longer from <code>delete_neighbor</code>,
+you may also need change <code>update</code>.</p>
+<p>The packets triggered directly and indirectly by calling
+<code>delete_neighbor</code> should ensure that the deleted link is not
+used anymore. However, as discussed in the hints below, entities may not
+discover an alternate route until a periodic update happens.</p></li>
+<li><p>Test your submission:</p>
+<ul>
+<li><p>using <code>sample_add.py</code>, <code>sample_remove1.py</code>
+and <code>sample_remove2.py</code>. Make sure you have versions of <a
+href="files/dv/sample_add.py">sample_add.py</a> and <a
+href="files/dv/sample_remove2.py">sample_remove2.py</a> and <a
+href="files/dv/network_simulator.py">network_simulator.py</a> from after
+22 Oct 11:45am.</p></li>
+<li><p>running <code>test.py</code> without the
+<code>--exclude-link-changes</code> flag</p></li>
+</ul></li>
+</ol>
+<h2 data-number="1.3" id="submission"><span
+class="header-section-number">1.3</span> Submission</h2>
+<ol start="4" type="1">
+<li>Upload <code>entity.py</code> to the submission site.</li>
+</ol>
+<h1 data-number="2" id="hints"><span
+class="header-section-number">2</span> Hints</h1>
+<ol type="1">
+<li><p>To avoid duplicating code, I found it useful to have a utility
+method that generated a list of packets for all the functions that
+return lists of packets.</p></li>
+<li><p>When deleting a link to a neighbor, be sure to handle the case
+where you can send directly a node where you’d previously forward
+through that neighbor. For example, with this network:</p>
+<ul>
+<li>A to/from B with cost 1</li>
+<li>A to/from C with cost 8</li>
+<li>B to/from C with cost 1</li>
+<li>B to/from D with cost 2</li>
+<li>C to/from D with cost 1</li>
+</ul>
+<p>A’s routing tables should be:</p>
+<table>
+<thead>
+<tr class="header">
+<th>to</th>
+<th>next hop</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>A</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>B</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>B</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>B</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>After being informed the link from A to B went down, a natural thing
+to do might be to remove all the routes that use a next hop of B:</p>
+<table>
+<thead>
+<tr class="header">
+<th>to</th>
+<th>next hop</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>A</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>(none)</td>
+<td>infinity</td>
+</tr>
+<tr class="odd">
+<td><strong>C</strong></td>
+<td><strong><sub>(none)</sub></strong></td>
+<td><strong><sub>infinity</sub></strong></td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>(none)</td>
+<td>infinity</td>
+</tr>
+</tbody>
+</table>
+<p>But this ignores that A is responsible for knowing about the direct
+link from A to C, so instead it should update to account for that:</p>
+<table>
+<thead>
+<tr class="header">
+<th>to</th>
+<th>next hop</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>A</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>(none)</td>
+<td>infinity</td>
+</tr>
+<tr class="odd">
+<td><strong>C</strong></td>
+<td><strong>C</strong></td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>(none)</td>
+<td>infinity</td>
+</tr>
+</tbody>
+</table>
+<p>A will need learn about new routes to B and to D by eventually
+receiving an update from C.</p>
+<p>(In this particular case, that should happen as a result of updates
+triggered by the link going down: C’s routing table before the link went
+down included a route to A through B. After the link goes down, B should
+send an updated routing table to C indicating that it can no longer
+reach A. As a result, C should update its routing table and send the
+updated version to A, allowing A to discover new routes to B and
+D.)</p></li>
+<li><p>When deleting a link to a neighbor, sometimes the triggered
+updates won’t be sufficient for an entity to learn about alternate
+routes. For example, with this network:</p>
+<ul>
+<li>A to/from B with cost 1</li>
+<li>A to/from C with cost 1</li>
+<li>B to/from C with cost 1</li>
+</ul>
+<p>Immediately after discovering the link is down A’s routing table will
+be:</p>
+<table>
+<thead>
+<tr class="header">
+<th>to</th>
+<th>next hop</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>A</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>(none)</td>
+<td>infinity</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>C</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>and B’s routing table will be:</p>
+<table>
+<thead>
+<tr class="header">
+<th>to</th>
+<th>next hop</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>(none)</td>
+<td>infinity</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>B</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>C</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Both A and B will send their updated routing tables to C, but C’s
+routing table will not change as a result. So C will not automatically
+remind A or B that they can send messages to each other through C.
+Instead, we need to wait for a periodic update to cause C to send the
+updated routing table</p></li>
+</ol>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

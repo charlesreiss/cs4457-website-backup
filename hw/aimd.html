@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>AIMD | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="AIMD" />
+<meta name="author" content="Charles Reiss" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/aimd.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/aimd.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="AIMD" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss"},"headline":"AIMD","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/aimd.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a>
+<ul>
+<li><a href="#part-1" id="toc-part-1"><span
+class="toc-section-number">1.1</span> Part 1</a></li>
+<li><a href="#part-2" id="toc-part-2"><span
+class="toc-section-number">1.2</span> Part 2</a></li>
+</ul></li>
+<li><a href="#setting-up-ns-3-on-portal"
+id="toc-setting-up-ns-3-on-portal"><span
+class="toc-section-number">2</span> Setting up NS-3 on portal</a></li>
+<li><a href="#our-ns-3-additions" id="toc-our-ns-3-additions"><span
+class="toc-section-number">3</span> Our NS-3 additions</a>
+<ul>
+<li><a href="#mytcpcongestionops" id="toc-mytcpcongestionops"><span
+class="toc-section-number">3.1</span> MyTcpCongestionOps</a></li>
+<li><a href="#mytcpvother" id="toc-mytcpvother"><span
+class="toc-section-number">3.2</span> mytcpvother</a></li>
+</ul></li>
+<li><a href="#resources" id="toc-resources"><span
+class="toc-section-number">4</span> Resources</a></li>
+<li><a href="#hints" id="toc-hints"><span
+class="toc-section-number">5</span> Hints</a>
+<ul>
+<li><a href="#computing-goodput" id="toc-computing-goodput"><span
+class="toc-section-number">5.1</span> Computing goodput</a></li>
+</ul></li>
+</ul></nav>
+<div class="changelog">
+<p>Changelog:</p>
+<ul>
+<li>4 Oct 2025: update git repository to actually contain
+contrib/mytcp</li>
+<li>4 Oct 2025: correct path to contrib/mytcp/model/mytcp.cc (from
+erroneous contrib/mytcp/mytcp.cc)</li>
+<li>6 Oct 2025: explicitly specify that the goodput formula can be done
+visually/imprecisely and that we don’t expect any real mathematical
+modelling to be involved; also phrase things to indicate that if there’s
+no significant change in goodput that’s not necessarily a problem</li>
+<li>6 Oct 2025: add some hints about computing goodput</li>
+<li>7 Oct 2025: mention ns3 clean for troubleshooting for setting up
+NS-3 under portal</li>
+</ul>
+</div>
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<ol type="1">
+<li><p>Download our copy of NS-3 with additions described below:</p>
+<pre><code>git clone -b cs4457-dist https://github.com/charlesreiss/ns-3-dev ./ns-3-dev</code></pre></li>
+<li><p>Make sure you can run the <code>scratch/mytcpvother</code>
+simulation; see instructions below.</p></li>
+</ol>
+<h2 data-number="1.1" id="part-1"><span
+class="header-section-number">1.1</span> Part 1</h2>
+<ol type="1">
+<li><p>Using (and modifying, if you want) <code>mytcpvother</code>
+produce:</p>
+<ul>
+<li><p>A graph of congestion window size over time (for the MyTCP flow)
+with default settings.</p></li>
+<li><p>A table with at least two rows, each of which represents a
+different <code>maxBytes</code> parameter, and columsn representing:</p>
+<ul>
+<li>the <code>maxBytes</code> parameter;</li>
+<li>the average <q>goodput</q> (rate of data bytes usefully transmitted)
+for each flow;</li>
+<li>the average <em>combined</em> goodput for both flows</li>
+</ul>
+<p>You may, at your option, include additional columns.</p></li>
+</ul></li>
+<li><p>Modify the <code>mytcpvother</code> to support changing the delay
+of the shared link. Then,</p>
+<ul>
+<li><p>Produce a graph of the congestion window size over time (for the
+MyTCP flow) with a different link delay; and</p></li>
+<li><p>Add a column of shared link delay to the table from the previous
+part, and at least one new row with a different delay than the
+others.</p></li>
+</ul></li>
+<li><p>Based on your goodput results, estimate an emperical formula for
+how goodput changes (or does not change) as delay varies. An example way
+to do this would include plotting the results and estimating the
+regression line visually. (We are not expecting any mathematical
+modeling.) Briefly explain:</p>
+<ul>
+<li><p>how you derived your formula;</p></li>
+<li><p>what factor(s) you think you make goodput change in the way your
+formula specifies;</p></li>
+</ul></li>
+<li><p>Submit your graphs, table, formula, and the explanations to the
+two points above, and any code modifications via the submission
+site.</p></li>
+</ol>
+<h2 data-number="1.2" id="part-2"><span
+class="header-section-number">1.2</span> Part 2</h2>
+<ol type="1">
+<li><p>Customize the <code>MyTcpCongestionOps</code> so that on a
+simulation with default settings or with
+<code>--linkBandwidth=10Mbps</code>:</p>
+<ul>
+<li><p>when the <q>myTcpMode</q> parameter is 1, the MyTCP flow
+completes at least 10% faster in the <code>mytcpvother</code>
+simulation</p></li>
+<li><p>when the <q>myTcpMode</q> parameter is 2, the other flow
+completes at least 10% faster and the MyTCP flow completes no more than
+30% slower;</p></li>
+</ul>
+<p>(Your customizations may not query information not ordinarily sent to
+the MyTcpCongestionOps object, like the exact configuration of the
+simulated links.)</p></li>
+<li><p>Include in a report (in text, HTML, or PDF format; preferably
+with seperate sections for each of the below items):</p>
+<ul>
+<li><p>What changes you made to MyTcpCongestionOps.</p></li>
+<li><p>graphs of the congestion window size over time for MyTCP with
+your modifications (one for each added <q>mode</q>);</p></li>
+<li><p>How you decided to make those changes. If your changes involve
+selecting numerical parameters, describe how you choose those
+parameters. (If you choose the parameters thorugh experimentation,
+that’s fine; explain what you tried to decide on the final
+values.)</p></li>
+<li><p>Your assessment (ideally based on some experimentation) of what
+extent your technique could easily be extended to a substantially
+larger/smaller speed difference</p></li>
+</ul></li>
+<li><p>Submit your report and your code modifications via the submission
+site.</p></li>
+</ol>
+<h1 data-number="2" id="setting-up-ns-3-on-portal"><span
+class="header-section-number">2</span> Setting up NS-3 on portal</h1>
+<ol type="1">
+<li><p>NS-3 needs <code>cmake</code> and <code>ninja</code> to build.
+These are available on portal through the <code>module</code>
+system:</p>
+<pre><code>module load gcc cmake ninja</code></pre></li>
+<li><p>Before you first run NS-3, you need to configure it with</p>
+<pre><code>./ns3 configure</code></pre>
+<p>(from the ns-3-dev directory)</p></li>
+<li><p>You can run our example simulation (source code in
+<code>scratch/mytcpvother.cc</code>) using</p>
+<pre><code>./ns3 run scratch/mytcpvother</code></pre>
+<p>The first time you do this, NS-3 will need to compile and link
+everything, which will take a while. NS-3 should avoid recompiling
+things that don’t change.</p></li>
+<li><p>If you have compilation trouble or similar, it might be fixed by
+rebuilding things by running</p>
+<pre><code>./ns3 clean</code></pre>
+<p>then rerunnning <code>./ns3 configure</code></p></li>
+</ol>
+<h1 data-number="3" id="our-ns-3-additions"><span
+class="header-section-number">3</span> Our NS-3 additions</h1>
+<h2 data-number="3.1" id="mytcpcongestionops"><span
+class="header-section-number">3.1</span> MyTcpCongestionOps</h2>
+<p>In <code>contrib/mytcp/model/mytcp.cc</code>, we’ve created
+<code>MyTcpCongestionOps</code>. This implements a customizable
+congestion control policy. To change the congestion control policy, I
+would recommend changing <code>IncreaseWindow</code> and
+<code>GetSsThresh</code> functions.</p>
+<p>We have arranged so the <code>myTcpMode</code> value is available as
+an instance variable.</p>
+<h2 data-number="3.2" id="mytcpvother"><span
+class="header-section-number">3.2</span> mytcpvother</h2>
+<p>This simulation program is located in
+<code>scratch/mytcpvother.cc</code>.</p>
+<p>You can run this with</p>
+<pre><code>./ns3 run scratch/mytcpvother</code></pre>
+<p>You can provide command line options to the simulation; see</p>
+<pre><code>./ns3 run scratch/mytcpvother -- --help</code></pre>
+<p>to see what options are available — or look at the code in main()
+that asks for the options.</p>
+<p>You can pass values for options by doing something like</p>
+<pre><code>./ns3 run scratch/mytcpvother -- --maxBytes=180000000</code></pre>
+<p>The simulations uses a topology with 4 nodes, which is configured by
+the <code>SetupTopology</code> function:</p>
+<ul>
+<li>Node 1 and 2 are the source of flows (meaning it only sends
+data);</li>
+<li>Node 3 is a sink for the flows (meaning it only receives data)</li>
+<li>Node 0 is a router connected to all other nodes using point-to-point
+links.</li>
+</ul>
+<p>The simulation sets a TCP connection from node 1 to node 3 using the
+<code>MyTcpCongestionOps</code> TCP implementation, and a connection
+from node 2 to node 3 using the <code>NewRenoTcp</code>
+implementation.</p>
+<p>If you passing the <code>--tracing</code> option, the simulation will
+produce output files:</p>
+<ul>
+<li><code>mytcpvother-X-Y.pcap</code>: a packet capture file for packets
+sent from node X’s interface number Y</li>
+<li><code>mytcpvother.tr</code>: a text file listing all the events in
+the simulation</li>
+<li><code>mytcpvother-cwnd-X.csv</code>,
+<code>mytcpvother-ssthresh-X.csv</code>: CSV files containing the values
+of the cwnd (congestion window size) and ssthresh (slow start threshold)
+values for node X’s TCP connections; the columns of the CSV file are
+time (in nanoseconds), socket number, and value.</li>
+</ul>
+<h1 data-number="4" id="resources"><span
+class="header-section-number">4</span> Resources</h1>
+<p>In addition to the <a href="https://nsnam.org">official NS-3
+website</a> and our slides, you might refer to <a
+href="https://intronetworks.cs.luc.edu/current2/html/ns3.html">Doral’s
+chapter on NS-3</a></p>
+<h1 data-number="5" id="hints"><span
+class="header-section-number">5</span> Hints</h1>
+<h2 data-number="5.1" id="computing-goodput"><span
+class="header-section-number">5.1</span> Computing goodput</h2>
+<ol type="1">
+<li><p>The reason we are asking for goodput and not throughput is that
+we don’t want to include the bandwidth used for TCP and IP headers,
+retransmissions, and other <q>overhead</q>.</p></li>
+<li><p>You can figure out the total number of bytes received from
+main()’s output and the option supplied for maxBytes, or by looking at
+the packet traces in wireshark (to count how many bytes are received in
+the TCP connections).</p></li>
+<li><p>main() prints out the time the last byte was received, or you can
+look at when the last byte was received in the packet traces.</p></li>
+</ol>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>P4 | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="P4" />
+<meta name="author" content="Charles Reiss, based on an assignment by Hyojoon Kim" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/p4.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/p4.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="P4" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss, based on an assignment by Hyojoon Kim"},"headline":"P4","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/p4.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a>
+<ul>
+<li><a href="#part-1" id="toc-part-1"><span
+class="toc-section-number">1.1</span> Part 1</a></li>
+<li><a href="#part-2" id="toc-part-2"><span
+class="toc-section-number">1.2</span> Part 2</a></li>
+</ul></li>
+<li><a href="#part-2-recommendation"
+id="toc-part-2-recommendation"><span class="toc-section-number">2</span>
+Part 2 recommendation</a>
+<ul>
+<li><a href="#step-1-setting-a-fixed-table-entry"
+id="toc-step-1-setting-a-fixed-table-entry"><span
+class="toc-section-number">2.1</span> Step 1: Setting a fixed table
+entry</a></li>
+<li><a href="#step-2-make-packets-be-sent-to-the-controller"
+id="toc-step-2-make-packets-be-sent-to-the-controller"><span
+class="toc-section-number">2.2</span> Step 2: make packets be sent to
+the controller</a></li>
+<li><a href="#step-3-set-mac_dst_lpm-entries-dynamically"
+id="toc-step-3-set-mac_dst_lpm-entries-dynamically"><span
+class="toc-section-number">2.3</span> Step 3: Set
+<code>mac_dst_lpm</code> entries dynamically</a></li>
+<li><a href="#step-4-limit-which-packets-are-sent-to-the-controller"
+id="toc-step-4-limit-which-packets-are-sent-to-the-controller"><span
+class="toc-section-number">2.4</span> Step 4: Limit which packets are
+sent to the controller</a></li>
+<li><a href="#step-5-verification" id="toc-step-5-verification"><span
+class="toc-section-number">2.5</span> Step 5: Verification</a></li>
+</ul></li>
+<li><a href="#hints" id="toc-hints"><span
+class="toc-section-number">3</span> Hints</a>
+<ul>
+<li><a href="#pcaps" id="toc-pcaps"><span
+class="toc-section-number">3.1</span> Examining pcaps</a></li>
+<li><a href="#understanding-mydataplane.p4"
+id="toc-understanding-mydataplane.p4"><span
+class="toc-section-number">3.2</span> Understanding
+mydataplane.p4:</a></li>
+<li><a href="#understanding-mycontroller.py"
+id="toc-understanding-mycontroller.py"><span
+class="toc-section-number">3.3</span> Understanding
+mycontroller.py</a></li>
+<li><a href="#running-the-simulated-network"
+id="toc-running-the-simulated-network"><span
+class="toc-section-number">3.4</span> Running the simulated
+network</a></li>
+</ul></li>
+</ul></nav>
+<!-- similar: https://github.com/2021-cs344/maclearning-exercise --->
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<h2 data-number="1.1" id="part-1"><span
+class="header-section-number">1.1</span> Part 1</h2>
+<ol type="1">
+<li><p>Download the supplied VM image for Virtualbox (x86-64) at <a
+href="https://virginia.box.com/s/uka089z32eozkbyd6skod1acev8ogxy9"
+class="uri">https://virginia.box.com/s/uka089z32eozkbyd6skod1acev8ogxy9</a></p>
+<p>or:</p>
+<ul>
+<li><p>install p4 or download a VM with P4 installed according to the
+instructions at <a
+href="https://github.com/jafingerhut/p4-guide/blob/master/bin/README-install-troubleshooting.md"
+class="uri">https://github.com/jafingerhut/p4-guide/blob/master/bin/README-install-troubleshooting.md</a>
+[which should work on arm64 VM running on UTM on OS X, but I have not
+tested this personally], and then</p></li>
+<li><p>move the <q>stock</q> P4 tutorials out of the way using</p>
+<pre><code> mv tutorials tutorials.orig</code></pre></li>
+<li><p>then copy our modified version of the p4 tutorials using</p>
+<pre><code> git clone -b cs4457-f25-base https://github.com/charlesreiss/p4tutorials.git ./tutorials</code></pre></li>
+</ul></li>
+<li><p>Run the VM and login (username/password p4/p4 for the Virtualbox
+image)</p></li>
+<li><p>Go to the <code>tutorials</code> directory and run
+<code>git pull</code> to make sure you have the latest version of the
+skeleton code.</p></li>
+<li><p>Go to the <code>tutorials/exercises/cs4457_f25</code> directory.
+(If there is a <code>cs4457_f24</code> directory but not a
+<code>cs4457_f25</code> directory, run
+<code>git checkout cs4457-f25-base</code>.)</p>
+<p>Run <code>git pull</code> to make sure you have the latest version of
+the skeleton code.</p></li>
+<li><p>Following the instructions below, setup a simulated network with
+four simulated hosts (<code>h1</code>, <code>h2</code>, <code>h3</code>,
+and <code>h4</code>) one simulated switch (<code>s1</code>) running a
+data plane specified in <code>mydataplane.p4</code> and a control plane
+implemented in <code>mycontroller.py</code>.</p>
+<p>To do this, as described below, you’ll run <code>make</code> to start
+the network emulator <code>mininet</code>. This will give you a prompt
+allowing you to run commands on each of the hosts. In another terminal,
+run <code>python3 mycontroller.py</code> to run the controller for the
+switch <code>s1</code>.</p>
+<p>Verify that the initial implementation:</p>
+<ul>
+<li>does not allow hosts to be reachable from each other until the
+controller is run to initialize the switch (using commands like
+<code>h1 ping h2</code> or <code>pingall</code> or
+<code>iperfudp 1M h1 h2</code> in mininet);</li>
+<li>allows all hosts to be reachable from each other when the switch is
+initialize</li>
+<li>broadcasts all frames sent by any simulated host to all other
+simulated hosts. This means:
+<ul>
+<li>the packet traces in pcaps/s1-ethX_out.pcap will show what the
+switch outputted to each port. Examined with wireshark or with a command
+like <code>tcpdump -er pcaps/s1-ethX_out.pcap</code>, they should show
+that each port received the same data.</li>
+</ul></li>
+</ul></li>
+<li><p>There is no submission for part 1, but if your VM setup is not
+working, then you will not be ready to do part 2.</p></li>
+</ol>
+<h2 data-number="1.2" id="part-2"><span
+class="header-section-number">1.2</span> Part 2</h2>
+<ol type="1">
+<li><p>The initially supplied switch implementation sends all packets to
+all ports, rather than directing packets to a particular port based on
+their destination MAC address.</p>
+<p>Modify it so that it does a simple form of <q>MAC learning</q>:</p>
+<ul>
+<li>The controller should learn the association between MAC addresses
+and switch ports.</li>
+<li>Based on this association, the controller should setup tables in the
+dataplane to route packets to each MAc address to the appropriate port
+instead of having them broadcast to all ports.</li>
+</ul>
+<p>(A better version of this functionality would implement ARP (address
+resolution protocol), but that is not expected for this assignment.)</p>
+<p>As part of your implementation, you will need to arrange for some
+packets to be sent to the controller. You should arrange for packets to
+only be sent to the controller if the dataplane cannot route them to the
+correct port.</p>
+<p>We recommend following the instructions below under <q>Part 2
+recommendation</q>, but this is not required.</p></li>
+<li><p>Verify that in your implementation:</p>
+<ul>
+<li><p>packets are directed to the correct port rather than being
+broadcast (without the MAC addresses being hard-coded in the switch in
+advance)</p></li>
+<li><p>once the controller learns about a host, few packets from the
+host are sent to the controller (most packets are handled exclusively by
+the data plane <q>fast path</q> of the switch)</p></li>
+</ul>
+<p>Describe how you verified your implementation in a file called
+<code>results.txt</code> or <code>results.pdf</code>. Include any
+relevant output.</p></li>
+<li><p>Submit your modified <code>mycontroller.py</code>,
+<code>mydataplane.p4</code> and <code>results.txt</code> or
+<code>results.pdf</code>.</p>
+<p>(Note that this assignment will be manually graded.)</p></li>
+</ol>
+<h1 data-number="2" id="part-2-recommendation"><span
+class="header-section-number">2</span> Part 2 recommendation</h1>
+<h2 data-number="2.1" id="step-1-setting-a-fixed-table-entry"><span
+class="header-section-number">2.1</span> Step 1: Setting a fixed table
+entry</h2>
+<ol start="2" type="1">
+<li><p>Modify <code>mycontroller.py</code> to make the following call in
+main() to <code>write_or_overwrite_table_entry</code> to make it so
+packets destined to 08:00:00:00:01:01 (<code>h1</code>’s MAC address in
+<code>topology.json</code>) are sent to port 1:</p>
+<pre><code>write_or_overwrite_table_entry(
+    p4info_helper=p4info_helper,
+    switch=switch,
+    table_name=&#39;MyIngress.mac_dst_lpm&#39;,
+    match_fields={
+        # first 48 bits match this MAC address
+        &#39;hdr.ethernet.dstAddr&#39;: (&#39;08:00:00:00:01:01&#39;, 48),
+    },
+    action_name=&#39;MyIngress.forward_to_port&#39;,
+    action_params={
+        &#39;port&#39;: 1,
+    }
+)</code></pre></li>
+</ol>
+<p>Verify that this change causes packets destined for <code>h1</code>
+not to be duplicated on other ports but should still leave h1
+reachable.</p>
+<p>I would suggest examining the <code>pcaps</code> files as <a
+href="#pcaps">described below under the heading <q>Examining
+pcaps</q></a> to do this.</p>
+<p>(Alternately, you can use the counters that are mainted by the egress
+processing in the supplied mydataplane.p4. <code>mycontroller.py</code>
+contains a <code>print_egress_counters</code> function that will read
+and output the values for these counters. If you want the controller to
+do that periodically, you can write a function that does that:</p>
+<pre><code>    def print_counter_loop(p4info_helper, switch):
+        while True:
+            print_egress_counters(p4info_helper, switch)
+            sleep(30)</code></pre>
+<p>And then run it in a separate thread:</p>
+<pre><code>    import threading
+    thread = threading.Thread(target=print_counter_loop, args=(p4info_helper, s1))
+    thread.start()</code></pre>
+<p>)</p>
+<p>Later, instead of hard-coding the MAC address of <code>h1</code> and
+its corresponding port, you will infer that information from packets the
+switch receives.</p>
+<h2 data-number="2.2"
+id="step-2-make-packets-be-sent-to-the-controller"><span
+class="header-section-number">2.2</span> Step 2: make packets be sent to
+the controller</h2>
+<ol start="3" type="1">
+<li><p>Modify <code>mydataplane.p4</code> to uncomment the call
+<code>copy_to_controller()</code> before
+<code>mac_dst_lpm.apply()</code>.</p>
+<pre><code>metadata = decode_packet_in_metadata(
+    p4info_helper,
+    switch,
+    packet.metadata
+)</code></pre>
+<p>After doing this (and restarting the network simulation),
+<code>mycontroller.py</code> should start outputting information about
+every packet sent when you run commands in mininet. This output is
+produced by the <code>process_packet</code> function that you will
+modify later.</p>
+<p>(You might see some extra messages when mininet is getting setup from
+IPv6 autoconfiguration and mDNS. These messages can be sent before
+mininet finishes configuring the MAC addresses in the hosts in the
+simulated topology, so they may use MAC addresses that aren’t part of
+the configured topology.)</p>
+<p>If you run a command like <code>h1 ping h2</code>, you should see
+ICMP echo request and ICMP echo reply messages.</p></li>
+</ol>
+<h2 data-number="2.3"
+id="step-3-set-mac_dst_lpm-entries-dynamically"><span
+class="header-section-number">2.3</span> Step 3: Set
+<code>mac_dst_lpm</code> entries dynamically</h2>
+<ol start="5" type="1">
+<li><p>Modify <code>process_packet</code> in
+<code>mycontroller.py</code> to add entries similar to the ones we added
+manually above for <code>h1</code> dynamically. Rather than hard-coding
+any MAC addresses and port numbers, you should look at each transmitted
+packet that comes from a MAC address not yet handled and add entries to
+the tables to handle forwarding for that MAC address.</p>
+<p>You can use <code>frame.src</code> and <code>frame.dst</code> to
+retrieve the MAC addresses sent in the incoming frames.</p>
+<p>You can use <code>metadata['inPort'][0]</code> to retrieve the input
+port number of the packet.</p>
+<p>Verify that your solution makes it so that, after each host sends
+some traffic (such as because you ran <code>pingall</code>), each host
+does only receives packets destined for its own MAC address (or packets
+sent to a broadcast/multicast MAC address).</p>
+<p>(Like with step 1, I would suggest examining the pcaps files to do
+this.)</p></li>
+</ol>
+<h2 data-number="2.4"
+id="step-4-limit-which-packets-are-sent-to-the-controller"><span
+class="header-section-number">2.4</span> Step 4: Limit which packets are
+sent to the controller</h2>
+<ol start="6" type="1">
+<li><p>Add a new table <code>mac_src_lpm</code> or
+<code>mac_port_src_lpm</code>, which is like <code>mac_dst_lpm</code>,
+but:</p>
+<ul>
+<li>matches based on the source mac address and (optionally) input port
+instead of the destination mac address</li>
+<li>has a default action of copy_to_controller and another possible
+action of <code>NoAction</code></li>
+</ul></li>
+<li><p>Replace the call to <code>copy_to_controller()</code> with an
+applicatoin of this table. Since the default action in the table is
+copy_to_controller, this will initially have the same effect</p></li>
+<li><p>Modify <code>process_packet</code> to:</p>
+<ul>
+<li>add a table entry to new table to override the default
+<code>copy_to_controller</code> setting to <code>NoAction</code>, so the
+switch does not receive future packets for that source MAC address and
+(optionally) port, and</li>
+<li>(optional) if a machine changes from one port to another, to
+overwrite or delete any table mac_port_src_lpm entry added for the prior
+port. This will ensure that if the machine changes back to the original
+port, then the controller will handle that operation.</li>
+</ul></li>
+</ol>
+<h2 data-number="2.5" id="step-5-verification"><span
+class="header-section-number">2.5</span> Step 5: Verification</h2>
+<ol type="1">
+<li>One way to verify that the correct behavior is happening is to run a
+bunch of <code>hX ping hY</code> commands (where <code>hX</code> and
+<code>hY</code> would be h1 through h4) and examine the packet traces in
+the <code>pcaps</code> directory as <a href="#pcaps">described below
+under the heading <q>Examining pcaps</q></a>. Note that each of these
+packet traces represent a <em>single direction</em> on a link.</li>
+</ol>
+<h1 data-number="3" id="hints"><span
+class="header-section-number">3</span> Hints</h1>
+<h2 data-number="3.1" id="pcaps"><span
+class="header-section-number">3.1</span> Examining pcaps</h2>
+<ol type="1">
+<li><p>As mentioned above the simulation produces a bunch of packet
+traces in the <code>pcaps</code> subdirectory of the
+<code>tutorials/exercises/cs4457_f25</code> directory. Each one
+represents the packets sent in <em>one direction</em> from the
+switch.</p>
+<p>You can open these with wireshark:</p>
+<ul>
+<li><p>type <code>wireshark</code> or <code>wireshark &amp;</code> at
+the command line to open wireshark;</p></li>
+<li><p>use File &gt; Open to find the .pcap files in wireshark;</p></li>
+<li><p>if you want to view traffic going in both directions to one of
+the ports, you can open the <q>in</q> file with File &gt; Open, then
+open the <q>out</q> file with File &gt; Merge. You should then examine
+both of the traces;</p></li>
+</ul>
+<p>You can also examine these from the command line with a command
+like:</p>
+<pre><code>tcpdump -er pcaps/FILE.pcap</code></pre></li>
+</ol>
+<h2 data-number="3.2" id="understanding-mydataplane.p4"><span
+class="header-section-number">3.2</span> Understanding
+mydataplane.p4:</h2>
+<ol start="2" type="1">
+<li><p><code>mydataplane.p4</code>: This contains an implementation of
+the data plane of a very simple switch:</p>
+<ul>
+<li><p>Initially, frames are parsed in MyParser(), which extracts
+headers for use by later steps.</p>
+<p>In this stage, we also setup a special header (called
+<code>hdr.packet_in</code> in the code) that is used to send packets<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> to the control plane for special
+processing. Corresponding code in MyEgress() will disable this header
+before sending out packets to destinations other than the control
+plane.</p></li>
+<li><p>Then packets enter ingress processing MyIngress(). This stage
+does table lookups based on the destination MAC addresses of the packet.
+The tables can be configured by the control plane to choose one of four
+actions:</p>
+<ul>
+<li>forwarding the packet to a particular output port;</li>
+<li>broadcasting the packet to all (non-controller) output ports;</li>
+<li>doing nothing</li>
+</ul>
+<p>There’s also an action which is initially not used called
+<code>copy_to_controller()</code> which sends a copy of the current
+packet to the controller. (In addition, the packet also undergoes normal
+processing.)</p></li>
+<li><p>If a packet is sent on any output port (including to the
+controller), then MyEgress() runs. Currently this has logic which
+will:</p>
+<ul>
+<li>avoid sending the control-plane information header to
+non-control-plane ports</li>
+<li>increments counters to track how many bytes and packets are sent to
+each destination port</li>
+</ul></li>
+<li><p>Before packets are sent out, MyDeparser() runs, which converts
+headers back into bytes.</p></li>
+</ul></li>
+</ol>
+<h2 data-number="3.3" id="understanding-mycontroller.py"><span
+class="header-section-number">3.3</span> Understanding
+mycontroller.py</h2>
+<ol start="3" type="1">
+<li><p><code>mycontroller.py</code> which contains an implementation of
+the control plane.</p>
+<p>The code in the <code>main()</code> function:</p>
+<ul>
+<li>connects to the switch</li>
+<li>loads the P4 program into the switch (from a compiled file which
+will be produced by <code>make</code>)</li>
+<li>configures the switch to support functionality to send packets to
+multiple destinations</li>
+<li>runs a loop where it receives packets sent from the switch and sends
+them to the process_packet function</li>
+</ul></li>
+<li><p>Initially, the loop that receives packets from the switch won’t
+do anything because the mydataplane.p4 does not run the
+<code>copy_to_controller</code> action.</p></li>
+<li><p>The <code>process_packet</code> function decodes some
+<q>metadata</q> fields that are setup by <code>mydataplane.p4</code>.
+These are defined in the <code>header packet_in_header_t</code> in
+<code>mydataplane.p4</code> and set in <code>MyIngress</code> (by
+modifying <code>hdr.packet_in</code>).</p>
+<p>To prevent the <q>metadata</q> fields from being output as part of
+packets sent to the simulated hosts, code in MyEgress marks this
+metadata as invalid except when the switch is outputting to the
+controler.</p>
+<p>The controller’s code in <code>process_packet</code> extracts the
+fields from the metadata into local variables for your convenience
+later. When the fields are sent to the controller, each metadata field
+is sent separately, but without only an index instead of a name, and
+without information about the size or format of the field. This means
+that if you modify the metadata fields in <code>mydataplane.p4</code>
+without corresponding modifications to <code>mycontroller.py</code>,
+mycontroller will read the wrong data.</p></li>
+</ol>
+<h2 data-number="3.4" id="running-the-simulated-network"><span
+class="header-section-number">3.4</span> Running the simulated
+network</h2>
+<ol type="1">
+<li><p><code>topology.json</code> specifies the layout of the simulated
+network and how the hosts are configured.</p>
+<p>In this case, there will be one switch called <code>s1</code>
+connected to four hosts <code>h1</code>, <code>h2</code>,
+<code>h3</code>, <code>h4</code>.</p>
+<p>The hosts are assigned MAC addresses and informed of the MAC
+addresses of all other hosts.</p>
+<p>Running <code>make</code> will compile the .p4 file and start a
+simulated network based on <code>topology.json</code>, and give you a
+prompt in the <code>mininet</code> tool.</p>
+<p>In the mininet tool you can:</p>
+<ul>
+<li><p>Run a command <code>FOO</code> on a particular simulated host,
+like <code>h1</code>, using a command <code>h1 FOO</code>.</p>
+<p>In the command you run the names of other hosts will be replaced by
+their IP addresses.</p>
+<p>For example <code>h1 ping h2</code> will run the command
+<code>ping 10.0.1.2</code> (since <code>10.0.1.2</code> is the
+configured IP address of h2 in topology.json). The <code>ping</code>
+command sends echo requests (using the IP control protocol ICMP) to a
+particular host and prints out messages when it gets echo replies.</p>
+<p>The simulated hosts are implemented by running a normal program with
+its network configuration changed, so you can run arbitrary
+commands.</p></li>
+<li><p>Get a terminal within a simulated host <code>h1</code> using
+<code>xterm h1</code></p></li>
+<li><p>Test whether each host is reachable from each other with
+<code>pingall</code></p></li>
+<li><p>Send data from host <code>h1</code> to host <code>h2</code> using
+TCP using a command like <code>iperf h1 h2</code> (named after the a
+well known networking testing tool called <code>iperf</code>)</p></li>
+<li><p>Send data from host <code>h1</code> to host <code>h2</code> using
+UDP at 1Mbps using a commnad like
+<code>iperfudp 1M h1 h2</code>.</p></li>
+</ul>
+<p>(and more, see also the command <code>help</code> in
+mininet)</p></li>
+<li><p>We need to run our controller program to setup the emulated
+switch. Until this is done, none of the hosts will be able to contact
+each other.</p>
+<p>You can run <code>python3 mycontroller.py</code> in another terminal
+to do this.</p>
+<p>Note that exiting <code>mininet</code> or terminating the python3
+program will stop the network.</p></li>
+</ol>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>really, layer-2 frames, but we will use the term
+<q>packet</q> since that is consistent with the P4 documentation.<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss, based on an assignment by Hyojoon Kim.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

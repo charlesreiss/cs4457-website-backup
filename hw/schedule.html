@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>packet scheduling/queuing discpline | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="packet scheduling/queuing discpline" />
+<meta name="author" content="Charles Reiss" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/schedule.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/schedule.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="packet scheduling/queuing discpline" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss"},"headline":"packet scheduling/queuing discpline","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/schedule.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a></li>
+<li><a href="#template" id="toc-template"><span
+class="toc-section-number">2</span> Running the template code</a></li>
+<li><a href="#hintsnotes" id="toc-hintsnotes"><span
+class="toc-section-number">3</span> Hints/Notes</a>
+<ul>
+<li><a href="#common-issues-computing-virtual-times"
+id="toc-common-issues-computing-virtual-times"><span
+class="toc-section-number">3.1</span> Common issues computing virtual
+times</a></li>
+<li><a href="#comparable-custom-types-in-python"
+id="toc-comparable-custom-types-in-python"><span
+class="toc-section-number">3.2</span> Comparable custom types in
+Python</a></li>
+</ul></li>
+</ul></nav>
+<div class="changelog">
+<p>Changelog:</p>
+<ul>
+<li>1 Oct 2025: adjust for weighted fair queueing with separate
+subqueues</li>
+<li>7 Oct 2025: specify that precise handling of packets arriving in the
+middle of other packets</li>
+<li>20 October 2025: make skeleton code correctly use <q>from util
+import trace</q></li>
+<li>22 October 2025: remove use of size_in_buffer in skeleton code and
+correct corresponding misaccounting in trace() prints</li>
+</ul>
+</div>
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<ol type="1">
+<li><p>Download the skeleton code <a
+href="files/schedule-skeleton.tgz">here</a> (last updated 22 October
+2024 12pm).</p>
+<p>This code includes a setup for a simulator (the same as for the
+<code>reliable</code> assignment), which is configured to have two
+connections, called <q>c1</q> and <q>c2</q>, between the same two hosts.
+Each connection sends packets from a sender to receiver on a shared
+link. Unlike the <code>reliable</code> assignment, there is no flow or
+congestion control; instead packets are generated at a rate specified
+when running the simulation.</p>
+<p>The simulation allows for interchangeable buffer implementations on
+the simulated link. The default is a simple drop-tail,
+first-in-first-out scheme implemented in the <q>DropTailBuffer</q> in
+buffer.py.</p>
+<p>See the instructions under the heading <a href="#template">running
+the template code</a> regarding how to use the template code.</p></li>
+<li><p>Add a new buffer implementation in buffer.py called
+PriorityQueueBuffer</p>
+<p>In this implementation, implement a strict priority scheme where
+packets from connection c1 are serviced before packets from connection
+c2. You can identify which connection a packet is from using
+<code>packet.label</code> which will be <code>c1</code> for connection
+c1 and <code>c2</code> for connection c2.</p>
+<p>When the queue capacity is exceeded, your implementation must discard
+the newest packet from connection c2, if possible; otherwise, it should
+discard the newest packet from connection c1.</p>
+<p>If you are successsful:</p>
+<ul>
+<li><p>no packet should be received out-of-order by connection c1 or
+c2</p></li>
+<li><p>as long as the rate of c1 is less than the link bandwidth, it
+should achieve its full bandwidth (in terms of messages received/time
+unit) and have a latency close to the link delay.</p>
+<p>This should occur:</p>
+<ul>
+<li>regardless of the rate of c2, even if the rate of c2 substantially
+exceeds the available bandwidth</li>
+<li>even if the rate of c1 is very small</li>
+</ul></li>
+<li><p>as long as the rate of c1 is substantially less than the link
+bandwidth, c2 should be able to use the remainder of the link
+bandwidth</p></li>
+</ul></li>
+<li><p>Add a new buffer implementation in buffer.py called
+WeightedFairQueuingBuffer.</p>
+<p>In this implementation, store the packets from connection c1 in a
+separate buffer from the packets for connection c2. For each of these
+buffers, have fixed limit on their size, and drop the incoming packets
+if those buffers are full.</p>
+<p>In this queue, implement weighted fair queuing, where packets from
+connection c1 get twice the bandwidth as packets from connection c2.</p>
+<p>To keep this assignment simpler, your implementation does not need to
+account for adjustments to virtual time based on one packet being in the
+middle of being transmitted when another is received. For example, this
+means you can compute the <q>current</q> virtual time based on the
+virtual time of the last transmitted packet.</p>
+<p>You can identify which connection a packet is from using
+<code>packet.label</code> which will be <code>c1</code> for connection
+c1 and <code>c2</code> for connection c2.</p>
+<p>Since our simulated packets have variable size, you will need to
+retrieve the packet sizes using <code>packet.size</code>.</p>
+<p>If you are successful:</p>
+<ul>
+<li>no packet should be received out-of-order by connection c1 or
+c2</li>
+<li>if c1’s rate is more than 67% of the capacity of the link and c2’s
+rate is more than 34% of the capacity of the link, then c1 should
+achieve around 66% of the capacity of the link and c2 around 33% of the
+capacity of the link (in terms of messages/time unit)</li>
+<li>if c1’s rate is less than 66% of the capacity of the link, then:
+<ul>
+<li>c1’s latency should be close to the link delay, and</li>
+<li>c2 should recieve the remainder of the bandwidth of the link (if its
+rate is high enough)</li>
+</ul></li>
+</ul></li>
+<li><p>Submit your modified <code>buffer.py</code>.</p></li>
+</ol>
+<h1 data-number="2" id="template"><span
+class="header-section-number">2</span> Running the template code</h1>
+<ol type="1">
+<li><p>When you run <code>main.py</code>, it will run the simulation
+with default settings and output information about what happened and the
+configuration:</p>
+<pre><code>forward link: 1000.0 size units/sec; link delay 1.0 +/- 0.0; 60-entry buffer.DropTailBuffer
+c1: generated 5.0 packets/sec with average size 100
+c1: received 2302 packets (126679 total size) in 5000.2 (25.3 size units/time unit; 0.5 messages/time unit)
+c1: latency: mean 1.00  +/- sd 0.01
+c1: 22851 messages skipped, 9 not received at end, 0 corrupt or received out-of-order
+c2: generated 5.0 packets/sec with average size 100
+c2: received 2236 packets (123110 total size) in 5000.2 (24.6 size units/time unit; 0.4 messages/time unit)
+c2: latency: mean 1.00  +/- sd 0.01
+c2: 22513 messages skipped, 26 not received at end, 0 corrupt or received out-of-order</code></pre>
+<p>In this default configuration, the rate of messages being sent seem
+like they should exactly fill the link. But, there is randomness in the
+interval between packets and the exact size of packets. This means that
+sometimes packets cluster up enough to cause some to be dropped and
+sometimes there are periods when the link is underutilized.</p></li>
+<li><p>Unlike the reliable assignment, the length of the simulation is
+controlled by the <code>--time-limit</code> parameter, by default this
+is 5000; you can adjust it to something shorter like
+<code>--time-limit=100</code> if you want a faster simulation.</p></li>
+<li><p>You can edit the other simulation parameters with the various
+options listed with <code>python3 main.py --help</code>.</p></li>
+<li><p>The two connections are controlled by two parameters:</p>
+<ul>
+<li><code>--cX-rate=RATE</code>: the mean number of packets to send per
+unit time. The actual time between packets will be determined using a
+exponential distribution.</li>
+<li><code>--cX-size=SIZE</code>: the mean size of packets (in arbitrary
+<q>size units</q>); the actual size will vary from 50% and 150% of SIZE,
+chosen uniformly for each packet. The minimum supported size is 40.</li>
+</ul></li>
+<li><p>You should notice that, with the default DropTailBuffer strategy,
+increasing the rate for one connection while leaving the other the same
+will cause both connections to drop a larger portion of packets
+(<q>messages skipped</q>), and will result in the higher sending rate
+connnection achieving a higher effective bandwidth.</p>
+<p>If these connections used TCP-style congestion control, then most
+likely both settle on approximately the same bandwidth. (The simulation
+should support plugging in your reliable part 3 implementation using the
+<code>--sender-class</code> and <code>--receiver-class</code> options,
+but that is not part of this assignment.)</p></li>
+<li><p>You can use the <code>--buffer-class=...</code> option to change
+to your own buffers in <code>buffer.py</code>.</p></li>
+</ol>
+<h1 data-number="3" id="hintsnotes"><span
+class="header-section-number">3</span> Hints/Notes</h1>
+<ol type="1">
+<li><p>Unrealistically, our supplied DropTailBuffer and what we require
+you to implement have a capacity measured in packets, not size units. So
+you do not need to take into account packet size when deciding whether
+to drop packets.</p></li>
+<li><p>We don’t have a particular compute-time requirements, so it’s
+allowed for your implementation not to use optimal data
+structures.</p></li>
+<li><p>One strategy for storing the queue for the priority queue and the
+weighted fair queuing part is to keep two separate sub-queues for each
+of the two classes. Another would be keep to one sorted list.</p></li>
+<li><p>If you want a list you can efficiently add/remove from both ends,
+the <a
+href="https://docs.python.org/3/library/collections.html#collections.deque">deque</a>
+class provided by Python’s collections library is useful.</p></li>
+<li><p>If you want an implementation of a heap (a data structure that
+can efficiently remove the minimum item), you can use Python’s <a
+href="https://docs.python.org/3/library/heapq.html">heapq</a>. It,
+unfortunately, is not also efficient for removing the maximum item
+(which you might want for drops). The way Python’s heap is implemented,
+however, you can inefficiently remove the maximum item by sorting it and
+then truncating away the last item.</p></li>
+<li><p>To control how Python sorts values by default, you can define a
+custom <code>&lt;</code> operator or just represent your values as
+careful ordered tuples or similar. See the heading <q>Comparable custom
+types in Python</q> for some options to do this.</p>
+<p>For using <code>heapq</code>, this seems to be the only way to
+control the sort order. For Python’s sorting functions, you can also
+change the sort order with the <code>key</code> or <code>cmp</code>
+arguments.</p></li>
+<li><p>I wish I could point to a convenient balanced binary tree in
+Python standard library (that could provide efficient removal of both
+minimum and maximum values), but I do not believe there is one.</p></li>
+</ol>
+<h2 data-number="3.1" id="common-issues-computing-virtual-times"><span
+class="header-section-number">3.1</span> Common issues computing virtual
+times</h2>
+<ol type="1">
+<li>In weighted fair queuing, we often compute a packet’s virtual time
+based on a previous packet’s virtual time. A common mistake is to use
+the virtual time of packet which has been dropped from the queue for
+this rather than finding the correct packet to use in the queue.</li>
+</ol>
+<h2 data-number="3.2" id="comparable-custom-types-in-python"><span
+class="header-section-number">3.2</span> Comparable custom types in
+Python</h2>
+<ol type="1">
+<li><p>Python tuples implement the <code>&lt;</code> operator
+automatically, so for example:</p>
+<pre><code>return (a, b, c) &lt; (d, e, f)</code></pre>
+<p>is basically equivalent to:</p>
+<pre><code>if a &lt; d:
+    return True
+elif a == d and b &lt; e:
+    return True
+elif a == d and b == e and c &lt; f:
+    return True
+else:
+    return False</code></pre>
+<p>Note that this triggers an error when it’s not possible to compare
+some the values used. To help make this strategy possible,
+<code>Packet</code> objects in the skeleton code implement a
+<code>&lt;</code> operator that choses an arbitrary order.</p></li>
+<li><p>You can make a custom type in Python that has a custom
+<code>&lt;</code> operation using something like:</p>
+<pre><code>class MyType(object):
+    def __init__(self, field1, field2, non_compared_field):
+        self.field1 = field1
+        self.field2 = field2
+        self.non_compared_field = non_compared_field
+
+    def __lt__(self, other):
+        if self.field1 &lt; other.field1:
+            return True
+        elif self.field1 == other.field1 and self.field2 &lt; other.field2:
+            return True
+        else:
+            return False</code></pre>
+<p>Then you can create instances of MyType using something like
+<code>variable = MyType(field1=10, field2=20, non_compared_field=30)</code>
+and access the fields using <code>variable.field1</code> and
+<code>variable.field2</code> and
+<code>variable.non_compared_field</code>.</p>
+<p>Alternately, the standard <code>dataclasses</code> module can
+automate this process for you:</p>
+<pre><code>from dataclasses import dataclass, field
+
+...
+
+@dataclass(order=True)
+class MyType:
+    field1 = field()
+    field2 = field()
+    non_compared_field = field(compare=False)</code></pre></li>
+</ol>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

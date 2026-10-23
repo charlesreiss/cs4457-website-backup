@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Wireless | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Wireless" />
+<meta name="author" content="Charles Reiss" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/wireless-old.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/wireless-old.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Wireless" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss"},"headline":"Wireless","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/wireless-old.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a></li>
+<li><a href="#simulation-interface" id="toc-simulation-interface"><span
+class="toc-section-number">2</span> Simulation Interface</a>
+<ul>
+<li><a href="#station-interface" id="toc-station-interface"><span
+class="toc-section-number">2.1</span> Station Interface</a></li>
+<li><a href="#command-line-interface"
+id="toc-command-line-interface"><span
+class="toc-section-number">2.2</span> Command Line Interface</a></li>
+<li><a href="#simulator-specifics" id="toc-simulator-specifics"><span
+class="toc-section-number">2.3</span> Simulator Specifics</a></li>
+</ul></li>
+</ul></nav>
+<blockquote>
+<p>This assignment is likely to be replaced by something very differnt
+for this semester.</p>
+</blockquote>
+<div class="changelog">
+<p>Changelog:</p>
+<ul>
+<li>14 Nov 2024: fix bug in <code>access_point.py</code> where sense()
+might sometimes crash</li>
+<li>20 Nov 2024: fix major bug in <code>simtime.py</code> where time
+would advance too quickly.</li>
+<li>21 Nov 2024: modify supplied mac.py to not <code>import time</code>
+to avoid confusion</li>
+<li>21 Nov 2024: specify recommended testing with around 20
+packets/second to test with</li>
+<li>3 Dec 2024: use <code>--mac</code> argument correctly in
+examples</li>
+</ul>
+</div>
+<blockquote>
+<p>This is based on an assignment originally constructed by Brad
+Campbell.</p>
+</blockquote>
+<blockquote>
+<p>If you downloaded <code>simtime.py</code> before noon 20 Nov, get an
+updated version <a href="files/simtime.py">here</a></p>
+</blockquote>
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<ol type="1">
+<li><p>Download the skeleton code at <a
+href="files/wireless-skeleton.tgz">here</a> <em>[last updated 2024-11-20
+noon]</em></p>
+<p>The skeleton code includes a simulator for a network where several
+randomly placed <q>stations</q> need to transmit packets to a central
+access point. The access point implements per-packet acknowledgments and
+simulatenously receives from each of 11 channels (frequencies). To
+simplify the assignmet, we will assume that acknowledgments are always
+received reliably.</p>
+<p>Your job is to improve the MAC protocol used by the stations to send
+a specified number of packets within a <q>goal</q> time computed by
+<code>project.py</code>.</p>
+<p>In the initial implementation, the stations make three attempts to
+transmit packets on wireless channel 1 at 0 dB of power.</p>
+<p>You can edit the code for the stations to more intelligently
+choose</p>
+<ul>
+<li>when to (re)transmit;</li>
+<li>which channels to use;</li>
+<li>the transmit power;</li>
+<li>how many time to retransmit.</li>
+</ul>
+<p>Unfortunately, you don’t have the capability to modify the access
+point, so you can’t implement features like RTS/CTS.</p></li>
+<li><p>Write a brief description of your chosen MAC protocol and how
+choose those settings; place this in a comment at the top in your
+<code>mac.py</code>.</p></li>
+<li><p>Test your code and produce a graph of your results as the number
+of stations used varies from 10 to 100 in increments of 5, graphing the
+total time needed to receive 150 packets. Label the axes of your graph.
+We recommend testing with around 20 packets/second.</p>
+<p>Place this graph in a file called <code>graph.pdf</code> or
+<code>graph.png</code></p></li>
+<li><p>Submit your modified <code>mac.py</code> (with the comment) and
+your graph to the submission site.</p></li>
+</ol>
+<h1 data-number="2" id="simulation-interface"><span
+class="header-section-number">2</span> Simulation Interface</h1>
+<p>The simulator uses a few files:</p>
+<ul>
+<li><p><code>project.py</code>: The top level file that sets up the
+simulation and starts it. You shouldn’t need to modify this.</p></li>
+<li><p><code>access_point.py</code>: The code that simulates the access
+point that receives all packets. Again, you shouldn’t need to modify
+this.</p></li>
+<li><p><code>station.py</code>: A helper file that implements the low
+level functions for stations in the context of the simulator. This
+includes the functions you will call to implement the MAC protocols. You
+shouldn’t need to modify this file.</p></li>
+<li><p><code>mac.py</code>: Where you will actually implement your MAC
+protocol. The MAC protocol is its own class, and is a subclass of the
+generic <code>Station</code> class. The rough template is sketched out
+for you.</p></li>
+</ul>
+<h2 data-number="2.1" id="station-interface"><span
+class="header-section-number">2.1</span> Station Interface</h2>
+<p>Inside of <code>mac.py</code> there are three functions provided by
+the generic station class that you will use to implement each MAC
+protocol. The <code>NullMac</code> implementation provides a simple
+example.</p>
+<ul>
+<li><p><code>void self.wait_for_next_transmission()</code>: This
+function blocks until a packet is ready to be sent by the station. Each
+MAC protocol should wait on this function to return in a loop. When it
+does return, the MAC protocol implementation should use the correct
+approach (based on which MAC protocol it is) to transmit a packet to the
+access point. The return value is a packet that you should pass to
+<code>send()</code>.</p></li>
+<li><p><code>string self.send(packet, tx_power, channel)</code>. Send a
+packet (retrieved from <code>wait_for_next_transmission()</code>) to the
+access point. TX power should be the transmit power in dB with a maximum
+of 20 dB (reasonable for WiFi). Channel is a WiFi channel number between
+1 and 11 (inclusive).</p>
+<p>If the packet transmission was successful this will return
+<code>'ACK'</code>. If not, <code>send()</code> will return
+<code>'NOACK'</code>.</p></li>
+<li><p><code>bool self.sense(channel)</code>. Sense the specific
+wireless channel (between 1 and 11) to see if there are any detectable
+active transmissions. Returns <code>True</code> if the channel is busy,
+<code>False</code> otherwise.</p></li>
+</ul>
+<h2 data-number="2.2" id="command-line-interface"><span
+class="header-section-number">2.2</span> Command Line Interface</h2>
+<p>The simulator exposes many configuration options via the command
+line. The generic interface looks like:</p>
+<pre><code>./project.py &lt;# stations&gt; &lt;pkts/s&gt; &lt;pkts&gt; --mac &lt;mac&gt;</code></pre>
+<p>For example, to specify a stations transmission rate of 20
+packets/second from eighteen stations using YourMac, where the access
+point is trying to collect 200 packets from each station:</p>
+<pre><code>./project.py 18 20 200 --mac YourMac</code></pre>
+<h2 data-number="2.3" id="simulator-specifics"><span
+class="header-section-number">2.3</span> Simulator Specifics</h2>
+<p>There are a few helpful details about the simulator environment that
+are useful to know. These are simplifications that make the situation
+easier to model without compromising the ability to compare different
+MAC protocols.</p>
+<ul>
+<li><p>This simulator uses a simulated clock controlled by the included
+<code>simtime</code> module. This includes a <code>sleep()</code>
+function that sleeps for an amount of simulated time.</p>
+<p>In the default mode, the clock will only advanced when all threads
+are either sleeping or waiting on a queue. Then, the simulator will
+figure out the next time threads would wake up from sleeping, advance
+the clock to that time and wake up those threads.</p>
+<p>Alternately, there is a <q>real time</q> mode you can enable with
+<code>--real-time</code>. In this mode the <code>sleep()</code> function
+calls the <q>real</q> <code>time.sleep()</code> function.</p></li>
+<li><p>Transmitting a <code>DATA</code> packet takes 10 ms.</p></li>
+<li><p>For simplicity, packets from the access point to a station take
+no time and are never lost.</p></li>
+<li><p>The stations should continue to transmit at the same rate even
+after the access point has received the minimum number of packets it is
+looking for.</p></li>
+</ul>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+
+Length: 138
+Transaction ID: 0x2185
+Flags: 0x8400 Standard query response, No error
+    1... .... .... .... = Response: Message is a response
+    .000 0... .... .... = Opcode: Standard query (0)
+    .... .1.. .... .... = Authoritative: Server is an authority for domain
+    .... ..0. .... .... = Truncated: Message is not truncated
+    .... ...0 .... .... = Recursion desired: Don't do query recursively
+    .... .... 0... .... = Recursion available: Server can't do recursive queries
+    .... .... .0.. .... = Z: reserved (0)
+    .... .... ..0. .... = Answer authenticated: Answer/authority portion was not authenticated by the server
+    .... .... ...0 .... = Non-authenticated data: Unacceptable
+    .... .... .... 0000 = Reply code: No error (0)
+Questions: 1
+Answer RRs: 2
+Authority RRs: 0
+Additional RRs: 0
+Queries
+    other.foo.example: type AAAA, class IN
+        Name: other.foo.example
+        [Name Length: 17]
+        [Label Count: 3]
+        Type: AAAA (IPv6 Address) (28)
+        Class: IN (0x0001)
+Answers
+    other.foo.example: type CNAME, class IN, cname otherother.foo.example
+        Name: other.foo.example
+        Type: CNAME (Canonical NAME for an alias) (5)
+        Class: IN (0x0001)
+        Time to live: 1000 (16 minutes, 40 seconds)
+        Data length: 24
+        CNAME: otherother.foo.example
+    otherother.foo.example: type AAAA, class IN, addr 2607:db8::f
+        Name: otherother.foo.example
+        Type: AAAA (IPv6 Address) (28)
+        Class: IN (0x0001)
+        Time to live: 1000 (16 minutes, 40 seconds)
+        Data length: 16
+        AAAA Address: 2607:db8::f
+[Unsolicited: True]
+

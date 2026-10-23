@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>reliable transport | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="reliable transport" />
+<meta name="author" content="Charles Reiss (based on ...)" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/reliable.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/reliable.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="reliable transport" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss (based on ...)"},"headline":"reliable transport","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/reliable.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a>
+<ul>
+<li><a href="#part-1-first-submission"
+id="toc-part-1-first-submission"><span
+class="toc-section-number">1.1</span> Part 1 (first submission)</a>
+<ul>
+<li><a href="#onezero-acknowledgments"
+id="toc-onezero-acknowledgments"><span
+class="toc-section-number">1.1.1</span> one/zero
+acknowledgments</a></li>
+<li><a href="#dynamic-timeouts" id="toc-dynamic-timeouts"><span
+class="toc-section-number">1.1.2</span> dynamic timeouts</a></li>
+<li><a href="#submission" id="toc-submission"><span
+class="toc-section-number">1.1.3</span> submission</a></li>
+</ul></li>
+<li><a href="#part-2-second-submission"
+id="toc-part-2-second-submission"><span
+class="toc-section-number">1.2</span> Part 2 (second submission)</a>
+<ul>
+<li><a href="#sliding-windows" id="toc-sliding-windows"><span
+class="toc-section-number">1.2.1</span> Sliding windows</a></li>
+<li><a href="#submission-1" id="toc-submission-1"><span
+class="toc-section-number">1.2.2</span> submission</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#api" id="toc-api"><span
+class="toc-section-number">2</span> API</a>
+<ul>
+<li><a href="#config-settings" id="toc-config-settings"><span
+class="toc-section-number">2.1</span> config settings</a></li>
+<li><a href="#sendingmaking-packets"
+id="toc-sendingmaking-packets"><span
+class="toc-section-number">2.2</span> sending/making packets</a></li>
+<li><a href="#timers" id="toc-timers"><span
+class="toc-section-number">2.3</span> timers</a></li>
+<li><a href="#trace" id="toc-trace"><span
+class="toc-section-number">2.4</span> <code>trace()</code></a></li>
+</ul></li>
+<li><a href="#hints" id="toc-hints"><span
+class="toc-section-number">3</span> Hints</a>
+<ul>
+<li><a href="#timers-doing-the-wrong-thing"
+id="toc-timers-doing-the-wrong-thing"><span
+class="toc-section-number">3.1</span> timers doing the wrong
+thing</a></li>
+<li><a href="#part-1" id="toc-part-1"><span
+class="toc-section-number">3.2</span> Part 1</a></li>
+</ul></li>
+</ul></nav>
+<div class="changelog">
+<p>Changelog:</p>
+<ul>
+<li>6 Sep 2025: supply updated config.py; more fully remove references
+to MAXIMUM_SEQUENCE from the writeup since it’s just set to a huge
+number</li>
+<li>8 Sep 2025: correct ReliableSender/ReliableReceiver to
+MySender/MyReceiver; note explicitly that to_network exists in
+MyReceiver like in MySender</li>
+<li>9 Sep 2025: update config.py in reliable skeleton to default to
+<code>one-zero</code> and not list <code>no-ack</code> mode that new
+error-checking code does not support</li>
+<li>15 Sep 2025: note about using config settings and not using <q>from
+config import …</q></li>
+<li>16 Sep 2025: correct <q>sliding</q> to <q>sliding-window</q> to
+match connection.py</li>
+<li>16 Sep 2025: update config.py in skeleton code not to refer to wrong
+<q>sliding</q> setting</li>
+<li>18 Sep 2025: update main.py to be more permissive about timeout
+enforcement in sliding-window setting</li>
+<li>17 Dec 2025 (for future semesters): don’t say to set moving average
+to initial timeout</li>
+</ul>
+</div>
+<blockquote>
+<p>If you downloaded the skeleton code before 6 Septemer 2025 around
+5pm, you may need an <a href="files/reliable/config.py">updated version
+of config.py</a>. Also after the morning of 18 September 2025, there is
+<a href="files/reliable/main,py">an updated main.py</a> was updated to
+be more permissive about timeout enforcement for the sliding window
+case, which would likely be relevant for solutions attempting to
+selective acknowledgments or similar.</p>
+</blockquote>
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<ol type="1">
+<li><p>Download the supplied simulator and skeleton code at <a
+href="files/reliable-skeleton.tgz">here</a> (last updated 18 September
+2025).</p>
+<p>In the skeleton code, you should only modify <code>ends.py</code>,
+which initially has code that implements transmission without any sort
+of reliablity.</p>
+<p>In <code>ends.py</code>, <code>MySender</code> receives messages from
+its simulated application layer then transmits them using the simulated
+network layer:</p>
+<ul>
+<li>We will call the <code>from_application</code> method with each
+message to be sent. This method should return <code>True</code> if an
+attempt was made to transmit the message. If an attempt cannot
+immediately be made to transmit the message, then it should return
+False. (If you return False, do not attempt to transmit the message in
+the future; our code will call <code>from_application</code> again
+later.)</li>
+<li>Given a Packet object <code>p</code>, you can call
+<code>self.to_network(p)</code> to send it to the receiver. (You will
+probably do this from the <code>from_application</code> method. I would
+recommend making a new Packet object for each call (see below).)</li>
+<li>Whenever you are ready to receive more data from the application
+(after having returned False from <code>from_application</code>), you
+must call <code>self.ready_for_more_from_application()</code>. It is
+okay if you call this method more times than necessary.</li>
+</ul>
+<p>Then <code>MyReceiver</code> receives those messages from its
+simulated network layer (in the <code>from_network</code> method), and
+forwards them to its simulated application layer:</p>
+<ul>
+<li>We will call the <code>from_network</code> method with each packet
+received. (This method’s return value does not matter.)</li>
+<li>Given a Message object <code>m</code>, you can call
+<code>self.to_application(m)</code> to send that message to the
+application.</li>
+<li>Like with <code>MyReceiver</code>, you can call
+<code>self.to_network</code> to send a Packet to the network, like in
+the MySender class.</li>
+</ul>
+<p>In <code>config.py</code>, we set global variables that will control
+your implementation, a variable <code>FOO</code> in this file is
+references as <code>config.FOO</code> below.</p>
+<p>Packet objects which have the following fields:</p>
+<ul>
+<li><code>data</code>: up to 20 bytes, or the special value None to
+indicate no data is present</li>
+<li><code>is_end</code>: a boolean field</li>
+<li><code>seq_num</code>: an integer sequence number</li>
+<li><code>ack_num</code>: an integer ack number or the special value
+None to specify no ack number</li>
+</ul>
+<p>Message objects which have the following fields:</p>
+<ul>
+<li><code>data</code>: up to 20 bytes (never None)</li>
+<li><code>is_end</code>: a boolean field, which will be True if and only
+if this is the last message to be sent</li>
+</ul>
+<p>We supply you with code that constructs Packet objects from Message
+objects and vice-versa. However, this code does not implement any form
+of reliablity; you will need to modify or replace it.</p>
+<p>Note that your submissions will only include <code>ends.py</code>; we
+will test your submission with unmodified versions of the other
+files.</p></li>
+</ol>
+<h2 data-number="1.1" id="part-1-first-submission"><span
+class="header-section-number">1.1</span> Part 1 (first submission)</h2>
+<h3 data-number="1.1.1" id="onezero-acknowledgments"><span
+class="header-section-number">1.1.1</span> one/zero acknowledgments</h3>
+<ol type="1">
+<li><p>Modify <code>ends.py</code>, so that when
+<code>config.MODE</code> is <code>one-zero</code>:</p>
+<ul>
+<li><p>it does not send a new message until the previous is acknowledged
+(like in <a
+href="https://book.systemsapproach.org/direct/reliable.html#stop-and-wait">section
+2.5.1 of <i>Computer Networks: A Systems Approach</i></a>), and
+retransmits a packet (from the sender)</p></li>
+<li><p>if a message is not acknowledged, it is resent (as many times as
+needed) config.INITIAL_TIMEOUT time units after a packet is
+sent.</p></li>
+<li><p>the acknowledgment number of an acknowledgment matches the
+sequence number of the message being acknowledged</p></li>
+<li><p>sequence numbers either:</p>
+<ul>
+<li><p>alternate between 0 and 1, or</p></li>
+<li><p>start at some value and increase indefinitely</p></li>
+</ul></li>
+</ul></li>
+<li><p>If MySender’s <code>from_application</code> cannot immediately
+transmit a message, then it should return False and not queue the
+message. (Our simulator/testing code will try resending it
+later.)</p></li>
+<li><p>Your implementation must send acknowledgment with an
+<code>ack_num</code> equal to the number for the most recently received
+message.</p></li>
+<li><p>Test your implementation:</p>
+<ul>
+<li><p>With no losses (loss rate 0), two packets per packet of data + 1
+or 2 extra packets should be sent in total. For example:</p>
+<pre><code> python3 main.py --generate-input 1000 --delay 1 --initial-timeout 10</code></pre>
+<p>should result in everything being received and not much more than
+1000 frames sent.</p></li>
+<li><p>Running the simulator with high loss rates (such as by adding
+<code>--drop 0.4</code>) should still result in everything being
+transmitted consistently, though using more frames.</p></li>
+<li><p>With no or almost no losses (such as <code>--drop 0.01</code>),
+one segment should be transmitted per two delays, so running the
+simulator with <code>--delay=1</code> should result in a transmission
+rate of about 20 bytes/(1*2 time units) = 10 bytes per time
+unit.</p></li>
+</ul></li>
+</ol>
+<h3 data-number="1.1.2" id="dynamic-timeouts"><span
+class="header-section-number">1.1.2</span> dynamic timeouts</h3>
+<ol type="1">
+<li><p>Instead of just using <code>config.INITIAL_TIMEOUT</code>,
+compute the timeout dynamically based on the observed round-trip
+time.</p>
+<p>My recommendation to do this would be:</p>
+<ul>
+<li><p>sample the round-trip time using the <code>timestamp</code> field
+in packets:</p>
+<p>Use the <code>now()</code> function to get the simulation timestamp
+and set this in the sender. <strong>Be sure to record a new time each
+time a packet is sent, even if it is resent from a timeout.</strong></p>
+<p>In the receiver, copy the timestamp from you receive into the
+acknowledgment packet.</p>
+<p>In the sender, when you receive an ack subtract the timestamp you
+receive from <code>now()</code> to get a sample of the round-tript
+time</p></li>
+<li><p>take an exponentially weighted moving average<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> of
+the sampled round-trip times:</p>
+<ul>
+<li><p>initialize the average based on your initial timeout or the first
+recorded RTT</p></li>
+<li><p>choose an <q>alpha</q> to determine how much the average is
+weighted toward recent RTT measurements. I recommend something like 0.2;
+higher values mean recent changes in RTT affect the average
+more.</p></li>
+<li><p>each time you record a new RTT, update the average:</p>
+<p>new avg = RTT * alpha + old avg * (1 - alpha)</p></li>
+</ul></li>
+<li><p>set the timeout to around twice that moving average. (A more
+sophisticated approach would estimate the variance of the RTT and use
+that information to set the timeout.)</p></li>
+</ul></li>
+<li><p>Test your implementation:</p>
+<ul>
+<li><p>With no losses, setting the initial timeout low compared to the
+actual timeout should result in relatively few extra messages sent, for
+example:</p>
+<pre><code> python3 main.py --generate-input 100 --initial-timeout 1 --delay 10</code></pre>
+<p>should result in not much more than 120 frames being sent in each
+direction, not something like 1000 frames.</p></li>
+<li><p>With a relatively low loss rate, setting the initial timeout very
+high should result in transmission taking not much longer than setting
+it more normally. For example,</p>
+<pre><code> python3 main.py --generate-input 10000 --drop 0.01 -- delay 1 --initial-timeout 100</code></pre>
+<p>should take somewhat more than 20000 time units, not anything larger
+than 30000 time units.</p></li>
+</ul></li>
+</ol>
+<h3 data-number="1.1.3" id="submission"><span
+class="header-section-number">1.1.3</span> submission</h3>
+<ol type="1">
+<li>Submit your <code>ends.py</code> on the submission site.</li>
+</ol>
+<h2 data-number="1.2" id="part-2-second-submission"><span
+class="header-section-number">1.2</span> Part 2 (second submission)</h2>
+<h3 data-number="1.2.1" id="sliding-windows"><span
+class="header-section-number">1.2.1</span> Sliding windows</h3>
+<ol type="1">
+<li><p>Modify <code>ends.py</code>, so that when
+<code>config.MODE</code> is <code>sliding-window</code>, it uses a
+sliding window (like in <a
+href="https://book.systemsapproach.org/direct/reliable.html#sliding-window">section
+2.5.2 of <i>Computer Networks: A Systems Approach</i></a>) with:</p>
+<ul>
+<li>a window size equal to <code>config.INITIAL_WINDOW</code> (which
+will be at least 1)</li>
+</ul>
+<p>In addition:</p>
+<ul>
+<li><p>messages are assigned consecutive sequence numbers; so if data
+packets for the first message are assigned sequence number 0, then the
+next should be sequence number 1, then 2, and so on (regardless of the
+size of the messages)</p></li>
+<li><p>your implementation must call <code>self.to_application</code> on
+messages in the order they were sent (even if they are not received in
+order)</p></li>
+<li><p>when sending acknowledgments, your implementation must use
+<em>cumulative acknolwedgments</em> with <code>ack_num</code> set to the
+highest sequence number such that that data packet and all previous data
+packets were also successfully received.</p>
+<p>(For example, if sequence numbers 0, 1, 2, 3, 4, 5, and 6 were sent,
+but only 0, 1, 2, 3, 5, and 6 were received, you should send an
+<code>ack_num</code> of 3; after sequence number 4 is received, you
+should send an <code>ack_num</code> of 6.)</p></li>
+</ul>
+<p>Optionally: you may chose to:</p>
+<ul>
+<li><p>have your implementation resend packets immediately after some
+number of duplicate ACKs (or similar signal indicating missing
+packets).</p></li>
+<li><p>use the <code>sack</code> field of packets to provide
+<q>selective acknowledgment</q> information about additional frames that
+have been received after <code>ack_num</code> to avoid some
+retransmissions</p></li>
+<li><p>choose to wraparound sequence numbers at some point (as long as
+there are more than 2 times the window size plus 1 sequence
+numbers)</p></li>
+</ul></li>
+<li><p>Test your implementation:</p>
+<ul>
+<li><p>With no losses (loss rate 0) and a timeout substantially longer
+than twice the transmission delay, no more than two packets per packet
+of data + 1 or 2 extra packets should be sent in total.</p></li>
+<li><p>With no or almost no losses, about config.INITIAL_WINDOW / 2
+segments should be transmitted per round-trip. With a
+<code>--delay=1</code> and INITIAL_WINDOW of 10, this should resultin a
+transmission rate of around 20 bytes * 5 segments/(1 * 2 time unit) = 50
+bytes per time unit</p></li>
+</ul></li>
+</ol>
+<h3 data-number="1.2.2" id="submission-1"><span
+class="header-section-number">1.2.2</span> submission</h3>
+<ol type="1">
+<li>Submit your <code>ends.py</code> on the submission site.</li>
+</ol>
+<h1 data-number="2" id="api"><span
+class="header-section-number">2</span> API</h1>
+<h2 data-number="2.1" id="config-settings"><span
+class="header-section-number">2.1</span> config settings</h2>
+<ol type="1">
+<li><p>After doing <code>import config</code>, you can access settings
+in config.py with syntax like <code>config.MODE</code>.</p></li>
+<li><p>I do not recommend trying to use
+<code>from config import FOO</code> instead of <code>config.FOO</code>,
+since you may not see changes our <code>main.py</code> makes to these
+config settings.</p></li>
+</ol>
+<h2 data-number="2.2" id="sendingmaking-packets"><span
+class="header-section-number">2.2</span> sending/making packets</h2>
+<ol type="1">
+<li>From both <code>MySender</code>/<code>MyReceiver</code>, you can
+send packets with the <code>to_network</code> method (that we will
+inject in those classes).</li>
+</ol>
+<h2 data-number="2.3" id="timers"><span
+class="header-section-number">2.3</span> timers</h2>
+<ol type="1">
+<li><p>You will need to setup a timer to handle retransmissions, the
+<code>util</code> library provides a <code>create_timer</code> and
+<code>cancel_timer</code> method to do this. For example, code like:</p>
+<pre><code>self.resend_timer = create_timer(
+    10,
+    lambda: self._do_resend()
+)</code></pre>
+<p>will cause <code>self._do_resend()</code> to run 10 time units in the
+future.</p>
+<p>If, before <code>self._do_resend()</code> runs you decide you do not
+want to run it, then you can use</p>
+<pre><code>cancel_timer(self.resend_timer)</code></pre>
+<p>Most likely your <code>from_network</code> implementation that
+receives acknowledgments will do something like this.</p></li>
+</ol>
+<h2 data-number="2.4" id="trace"><span
+class="header-section-number">2.4</span> <code>trace()</code></h2>
+<ol type="1">
+<li><p>There is a <code>trace()</code> function you can call like</p>
+<pre><code>trace(&quot;some-name&quot;, &quot;some message here&quot;)</code></pre>
+<p>if <code>some-name</code> in the set in config.py’s
+<code>TRACE</code> variable, then this will cause
+<code>some message here</code> to be output. If <code>some-name</code>
+is not in config.py’s <code>TRACE</code> variable, nothing will be
+output.</p>
+<p>You can also pass an option like</p>
+<pre><code>--trace=some-name,some-other-name,...</code></pre>
+<p>to override the value of <code>TRACE</code> from the comman
+dline.</p></li>
+</ol>
+<h1 data-number="3" id="hints"><span
+class="header-section-number">3</span> Hints</h1>
+<h2 data-number="3.1" id="timers-doing-the-wrong-thing"><span
+class="header-section-number">3.1</span> timers doing the wrong
+thing</h2>
+<ol type="1">
+<li><p>If you do something like:</p>
+<pre><code>def bar():
+    if True:
+        x = 1
+        some_timer = create_timer(10, lambda: foo(x))
+    ...
+    if True:
+        ...
+        x = 2</code></pre>
+<p>then the timer will call foo with <code>2</code>, not <code>1</code>.
+One way to avoid this is to call function with its own local variables
+to create timers.</p></li>
+</ol>
+<h2 data-number="3.2" id="part-1"><span
+class="header-section-number">3.2</span> Part 1</h2>
+<ol type="1">
+<li><p>If your timeouts are becoming very large, make sure you are
+setting a new timestamp each time you resend a packet. Otherwise, you
+may end up measuring the timeout to set your timeout and causing it to
+get very large.</p></li>
+<li><p>If your implementation for part 1 hangs, one possible reason can
+be failing to account for timeouts occuring multiple times. If you
+resend after a timeout, and then fail to receive an ACK again, you need
+to make sure you resend <em>again</em> after a second timeout.</p></li>
+</ol>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This is the type of average typically used in TCP; other
+types of moving averages would also be fine.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss (based on ...).
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

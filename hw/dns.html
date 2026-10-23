@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>DNS | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="DNS" />
+<meta name="author" content="Charles Reiss" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/dns.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/dns.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="DNS" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss"},"headline":"DNS","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/dns.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a></li>
+<li><a href="#output-format" id="toc-output-format"><span
+class="toc-section-number">2</span> output format</a></li>
+<li><a href="#some-dns-references" id="toc-some-dns-references"><span
+class="toc-section-number">3</span> some DNS references</a></li>
+<li><a href="#sample-dns-responses" id="toc-sample-dns-responses"><span
+class="toc-section-number">4</span> sample DNS responses</a></li>
+<li><a href="#testing-send-request" id="toc-testing-send-request"><span
+class="toc-section-number">5</span> testing –send-request</a>
+<ul>
+<li><a
+href="#regarding-logging-into-specific-machines-on-portal.cs.virginia.edu"
+id="toc-regarding-logging-into-specific-machines-on-portal.cs.virginia.edu"><span
+class="toc-section-number">5.1</span> Regarding logging into specific
+machines on portal.cs.virginia.edu</a></li>
+</ul></li>
+<li><a href="#hints" id="toc-hints"><span
+class="toc-section-number">6</span> Hints</a>
+<ul>
+<li><a href="#python-argument-parsing"
+id="toc-python-argument-parsing"><span
+class="toc-section-number">6.1</span> Python argument parsing</a></li>
+<li><a href="#checking-requests-in-wireshark"
+id="toc-checking-requests-in-wireshark"><span
+class="toc-section-number">6.2</span> Checking requests in
+wireshark</a></li>
+<li><a href="#encodingdecoding-big-endian-values"
+id="toc-encodingdecoding-big-endian-values"><span
+class="toc-section-number">6.3</span> Encoding/decoding big-endian
+values</a></li>
+<li><a href="#using-sys.stdout.buffer-and-sys.stdin.buffer"
+id="toc-using-sys.stdout.buffer-and-sys.stdin.buffer"><span
+class="toc-section-number">6.4</span> Using sys.stdout.buffer and
+sys.stdin.buffer</a></li>
+<li><a href="#openingusing-tcp-connections"
+id="toc-openingusing-tcp-connections"><span
+class="toc-section-number">6.5</span> Opening/using TCP
+connections</a></li>
+</ul></li>
+</ul></nav>
+<div class="changelog">
+<p>Changelog:</p>
+<ul>
+<li>19 Oct 2024-1 Nov 2024: (various adjustments made last
+semester)</li>
+<li>3 Nov 2025: remove notes about correted versions of the DNS samples
+archive, since the original version this semester has those corerections
+already; also remove last semester’s changelog entries to cleanup
+assignment</li>
+<li>3 Nov 2025: adjust formatting on note about portal.cs.virginia.edu
+in <q>testing –send-request</q> section</li>
+<li>9 Dec 2025: <q>sent by DNS server</q> -&gt; ” sent by DNS server
+over TCP”</li>
+</ul>
+</div>
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<ol type="1">
+<li><p>In <code>dns.py</code>, write a program where:</p>
+<ul>
+<li><p><code>python3 dns.py --create-request HOSTNAME --ipv4</code>
+creates a DNS query message that requests the IPv4 addresses of HOSTNAME
+with recursion disabled, and writes it to stdout (as in using
+<code>sys.stdout.buffer</code> in Python3) prefixed by the request size
+as a 2-byte big endian number (like would be used when sending a DNS
+request over TCP).</p>
+<p><code>python3 dns,py --create-request HOSTNAME --ipv6</code> should
+do the same, but request the IPv6 address.</p></li>
+<li><p><code>python3 dns.py --process-response</code> reads a DNS query
+response (for a query asking for an IPv4 and/or IPv6 address for a
+hostname) from stdin (as in using <code>sys.stdin.buffer</code> in
+Python3) and parses it. (You may not use a DNS library or call out to
+another program to do the parsing or request generation.) The input DNS
+query response will be prefixed by its size in bytes, as happens when it
+is sent by a DNS server over TCP.</p>
+<p>Then, it outputs JSON in the format specified in the <q><a
+href="#format">output format</a></q> section below identifying:</p>
+<ul>
+<li>if it’s an error;</li>
+<li>the IPv4 and IPv6 addresses identified in the answer part of the
+response, if any;</li>
+<li>if no IPv4 and IPv6 address is identified in the answer part of the
+response, then:
+<ul>
+<li>if a CNAME needs to be followed to find the IPv4 or IPv6 address,
+the name to lookup in the recursive query</li>
+<li>the names and IPv4 and/or IPv6 addresses of potential DNS servers to
+contact to resolve that name as part of a recursive query</li>
+</ul></li>
+</ul>
+<p>To keep the assignment simpler, you do not have to implement DNS name
+compression in your responses.</p></li>
+<li><p><code>python3 dns.py --send-request HOSTNAME --server SERVER --port PORT --ipv4</code>
+or
+<code>python3 dns.py --send-request HOSTNAME --server SERVER --port PORT --ipv6</code>
+makes a DNS request using TCP to the DNS server with name SERVER on port
+number PORT. The request should be the same request that would be
+generated by the <code>--create-request</code> option. After making the
+request, the program should retrieve the response and process the result
+as in <code>--process-response</code>, outputting the corresponding JSON
+to stdout.</p></li>
+</ul></li>
+<li><p>Submit your code by uploading dns.py to the submission
+site.</p></li>
+</ol>
+<h1 data-number="2" id="output-format"><span
+class="header-section-number">2</span> output format</h1>
+<p>When processing a response, output a JSON dictionary with the entries
+with the following keys and corresponding values:</p>
+<ul>
+<li><code>kind</code> — one of:
+<ul>
+<li><code>error</code> (if a non-zero response status is returned)</li>
+<li><code>address</code> (if an A or AAAA record existed in the answer
+section)</li>
+<li><code>next-name</code> (if a CNAME was found in the answer section
+and no addresses were found in the answer section)</li>
+<li><code>next-server</code> (if no addresses or CNAMEs were found in
+the answer section and NS records were found in the authority
+section)</li>
+<li><code>malformed</code> (if the response was missing or malformed in
+some way)</li>
+</ul></li>
+<li><code>addresses</code> (only required if <code>kind</code> is
+<code>address</code>): a list of the IPv4 addresses and IPv6
+addresses</li>
+<li><code>next-name</code> (only required if <code>kind</code> is
+<code>next-name</code>): the domain name from CNAME record; if there are
+a chain of CNAME records, from the last CNAME record in the chain. (You
+may assume the CNAME records are present in the answer in order.)</li>
+<li><code>next-server-names</code> (only required if <code>kind</code>
+is <code>next-server</code>): a list of the domain names of the next
+servers from the NS records</li>
+<li><code>next-server-addresses</code> (only required if
+<code>kind</code> is <code>next-server</code>): a list of DNS server
+IPv4 and IPv6 addresses</li>
+</ul>
+<p>In addition, you may include extra entries in the dictionary at your
+discretion. You may assume that any returned records in the answer or
+authority are responsive to the query. (For example, we won’t include an
+A record or CNAME record for an unrelated domain in the answer
+section.)</p>
+<p>In this JSON output:</p>
+<ul>
+<li>all lists must be represented as JSON arrays</li>
+<li>all IPv4 addresses must be represented as strings in dotted-quad
+format (example: <code>128.143.67.11</code>),</li>
+<li>all IPv6 addresses must be represented as strings in one of the
+formats specified in RFC 4291, section 2.2<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+(examples: <code>2607:f8b0:4004:c21::63</code>,
+<code>2607:F8B0:4004:0C21:0000:0000:0000:0063</code>), and</li>
+<li>all domain names with labels seperated by <code>.</code>s and
+optionally a trailing <code>.</code> (examples:
+<code>www.cs.virginia.edu.</code>,
+<code>www.cs.virginia.edu</code>)</li>
+</ul>
+<h1 data-number="3" id="some-dns-references"><span
+class="header-section-number">3</span> some DNS references</h1>
+<ol type="1">
+<li><p>Official specifications:</p>
+<ul>
+<li>term definitions: <a
+href="https://www.rfc-editor.org/rfc/rfc9499">RFC 9499</a></li>
+<li>concepts and facilities: <a
+href="https://www.rfc-editor.org/rfc/rfc1034">RFC1034</a></li>
+<li>implementation and specification: <a
+href="https://www.rfc-editor.org/rfc/rfc1035">RFC1035</a></li>
+<li>DNS extensions to support IP Version 6: <a
+href="https://datatracker.ietf.org/doc/html/rfc3596">RFC3596</a></li>
+</ul></li>
+<li><p>TCP/IP Illustrated, Volume 2, Chapter 11 (available via UVa
+library through <a
+href="https://learning.oreilly.com/library/view/tcp-ip-illustrated-volume/9780132808200/">O’Reilly</a>;
+login/create an account with your UVa email)</p></li>
+</ol>
+<h1 data-number="4" id="sample-dns-responses"><span
+class="header-section-number">4</span> sample DNS responses</h1>
+<ol type="1">
+<li><p><a href="files/dns-samples.tgz">Here</a> is an archive of DNS
+responses suitable for passing to
+<code>python3 --process-response</code>. The <code>.dat</code> files are
+the DNS responses, which you can test with something like</p>
+<pre><code>python3 --process-response &lt;file.dat</code></pre>
+<p>(Note that there are reports that these command do not work without
+modificaiton in Powershell (probably because it treats
+<code>file.dat</code> as a text instead of binary file). I know they
+will work on portal.cs.virginia.edu.)</p>
+<p>the <code>.txt</code> files show a human-readable version which is
+created by running a command like</p>
+<pre><code>od -Ax -tx1 -v file.dat | text2pcap -T 53,53 - - | tshark -T text -r - -V &gt;file.txt</code></pre>
+<p>to have <code>tshark</code> (command-line version of wireshark)
+process the DNS response (from <code>file.dat</code> into `file.txt),
+then extracting the relevant part of the output.</p>
+<p>The <code>.reference.json</code> files are the responses our
+reference implementation generated.</p></li>
+</ol>
+<h1 data-number="5" id="testing-send-request"><span
+class="header-section-number">5</span> testing –send-request</h1>
+<ol type="1">
+<li><p>You can test send-request using the <code>nc</code> utility,
+which can act as a simple TCP server.</p>
+<p>For example, you can run</p>
+<pre><code>nc -l -p 0 -s 127.0.0.1 -v &lt;input.dat &gt; output.dat</code></pre>
+<p>in one terminal. (The <code>-l</code> option says to listen for (act
+as a server) instead of making connections (act as a client). The
+<code>-p</code> option selects the input port number to bind to; binding
+to port 0 has the OS select a port number. The <code>-s 127.0.0.1</code>
+selects an IP address of 127.0.0.1, which is an IP address for
+<q>localhost</q> — it only contacts the current machine.)</p>
+<p>This commad will output a message like</p>
+<pre><code>Listening on 127.0.0.1 46245</code></pre>
+<p>Pay special attention to the port number listed after the IP address.
+Then in another terminal on the same machine you can run a command
+like</p>
+<pre><code>python3 dns.py --send-request www.cs.virginia.edu --server 127.0.0.1 --port 46245</code></pre>
+<p>(If you are connecting to portal.cs.virginia.edu, see note below
+regarding getting two terminals on the same machine, since
+portal.cs.virginia.edu forwards to one of several machines.)</p>
+<p>When your <code>dns.py</code> connects to <code>nc</code>, it will
+receive the contents of <code>input.dat</code> and whatever it sends
+will be written to <code>output.dat</code></p></li>
+</ol>
+<h2 data-number="5.1"
+id="regarding-logging-into-specific-machines-on-portal.cs.virginia.edu"><span
+class="header-section-number">5.1</span> Regarding logging into specific
+machines on portal.cs.virginia.edu</h2>
+<ol type="1">
+<li><p><code>ssh user@portal.cs.virginia.edu</code> connects you to one
+of several machines, names <code>portal01</code> through
+<code>portal11</code>. You can tell which of those machines you are
+logged in using your command prompt and/or by running the
+<code>hostname</code> command.</p></li>
+<li><p>Once logged into one portal machine or sufficiently on the UVa
+network, you can log into a particular portal machine using
+<code>ssh portalXX.cs.virginia.edu</code> where <code>portallXX</code>
+is the name of the machine with the number.</p></li>
+<li><p>With some SSH clients (probably including Linux/OS X’s), you can
+also have the SSH client login to portal.cs.virginia.edu and then SSH
+from that machine to portalXX.cs.virginia.edu with a command like
+<code>ssh -J user@portal.cs.virginia.edu user@portalXX.cs.virginia.edu</code>.
+(See also <a href="https://man.openbsd.org/ssh">OpenSSH’s manapage</a>’s
+section on the -J option.)</p></li>
+</ol>
+<h1 data-number="6" id="hints"><span
+class="header-section-number">6</span> Hints</h1>
+<h2 data-number="6.1" id="python-argument-parsing"><span
+class="header-section-number">6.1</span> Python argument parsing</h2>
+<ol type="1">
+<li>If found Python’s standard <a
+href="https://docs.python.org/3/library/argparse.html">argparse</a>
+library helpful.</li>
+</ol>
+<h2 data-number="6.2" id="checking-requests-in-wireshark"><span
+class="header-section-number">6.2</span> Checking requests in
+wireshark</h2>
+<ol type="1">
+<li><p>For debugging, you can convert the output of</p>
+<pre><code>python3 dns.py --create-request HOSTNAME ...</code></pre>
+<p>to a PCAP file you can open with wireshark using the
+<code>text2pcap</code> utility.</p>
+<p>One way to do this for a request for www.cs.virginia.edu:</p>
+<pre><code>python3 dns.py --create-request www.cs.virginia.edu --ipv4 &gt; request.dat
+od -Ax -tx1 -v &lt; request.dat &gt; request.od
+text2pcap -T 53,53 request.od request.pcapng</code></pre>
+<p>(Note that there are reports that these command do not work without
+modificaiton in Powershell (probably because it treats
+<code>request.dat</code> as a text instead of binary file). I know they
+will work on portal.cs.virginia.edu.)</p>
+<p>The first command runs
+<code>python3 dns.py --create-request www.cs.virginia.edu</code>, but
+sends its output to the file <code>request.dat</code>. The second
+command converts <code>request.dat</code> into a text-format (with
+hexadecimal) file that is saved in <code>request.od</code>. The third
+takes <code>request.od</code> and converts it to a file that wireshark
+can open by adding an ethernet and TCP header using source and
+destination port 53. (If you used -u 53,53, it would wrap it in a UDP
+header instead.)</p>
+<p>You can open up that file in a graphical version of wireshark. Also,
+on the command line on portal, you can get a dump of the contents with
+all information with a command like</p>
+<pre><code>tshark -T text -V -r request.pcapng &gt; request-as-text.txt</code></pre>
+<p>which will output a meachine-reaable text representation as
+<code>request-as-text.txt</code></p>
+<p>You can combine all of these into one command with something
+like:</p>
+<pre><code>python3 dns.py --create-request www.cs.virginia.edu | od -Ax -tx1 -v - | text2pcap -T 53,53 - - | tshark -T text -V -r - &gt; request-as-text.txt</code></pre></li>
+</ol>
+<h2 data-number="6.3" id="encodingdecoding-big-endian-values"><span
+class="header-section-number">6.3</span> Encoding/decoding big-endian
+values</h2>
+<ol type="1">
+<li>The standard Python <a
+href="https://docs.python.org/3/library/struct.html">struct</a> library
+is convenient for converting two and from big-endian integers.</li>
+</ol>
+<h2 data-number="6.4"
+id="using-sys.stdout.buffer-and-sys.stdin.buffer"><span
+class="header-section-number">6.4</span> Using sys.stdout.buffer and
+sys.stdin.buffer</h2>
+<ol type="1">
+<li><p><code>sys.stdout.buffer</code> and <code>sys.stdin.buffer</code>
+provide support for input and output for bytes (instead of
+<code>str</code>s) in Python.</p>
+<p>You can use them write or read bytes from stdin and stdout with
+something like</p>
+<pre><code>sys.stdout.buffer.write(bytes([1,2,3,4]))</code></pre>
+<p>or</p>
+<pre><code>the_4_bytes = sys.stdin.buffer.read(4)</code></pre>
+<p>.</p></li>
+</ol>
+<h2 data-number="6.5" id="openingusing-tcp-connections"><span
+class="header-section-number">6.5</span> Opening/using TCP
+connections</h2>
+<ol type="1">
+<li><p>You can use the <a
+href="https://docs.python.org/3/library/socket.html">socket</a> library
+to create TCP connections. Most simple is using
+<code>create_connection</code> followed by <code>sendall</code> and
+<code>recv</code>:</p>
+<pre><code>import socket
+...
+sock = socket.create_connection((&#39;host&#39;, port))
+sock.sendall(b&#39;The bytes to send&#39;)
+data = sock.recv(size)</code></pre>
+<p>(<code>sendall</code> is like send, but in case not all bytes can be
+sent at once, it calls send repeatedly until they all are or there is an
+error.)</p>
+<p>Note that you may need to call <code>recv</code> multiple times in
+case only some of the bytes you request are available
+initially.</p></li>
+</ol>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>RFC 4291 only gives examples with upper-case A-F, but we
+will allow both upper and lower case.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

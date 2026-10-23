@@ -1,0 +1,41 @@
+
+Length: 121
+Transaction ID: 0x3531
+Flags: 0x8403 Standard query response, No such name
+    1... .... .... .... = Response: Message is a response
+    .000 0... .... .... = Opcode: Standard query (0)
+    .... .1.. .... .... = Authoritative: Server is an authority for domain
+    .... ..0. .... .... = Truncated: Message is not truncated
+    .... ...0 .... .... = Recursion desired: Don't do query recursively
+    .... .... 0... .... = Recursion available: Server can't do recursive queries
+    .... .... .0.. .... = Z: reserved (0)
+    .... .... ..0. .... = Answer authenticated: Answer/authority portion was not authenticated by the server
+    .... .... ...0 .... = Non-authenticated data: Unacceptable
+    .... .... .... 0011 = Reply code: No such name (3)
+Questions: 1
+Answer RRs: 0
+Authority RRs: 1
+Additional RRs: 0
+Queries
+    foo.example.com: type A, class IN
+        Name: foo.example.com
+        [Name Length: 15]
+        [Label Count: 3]
+        Type: A (Host Address) (1)
+        Class: IN (0x0001)
+Authoritative nameservers
+    example.com: type SOA, class IN, mname ns-main.example.com
+        Name: example.com
+        Type: SOA (Start Of a zone of Authority) (6)
+        Class: IN (0x0001)
+        Time to live: 1800 (30 minutes)
+        Data length: 65
+        Primary name server: ns-main.example.com
+        Responsible authority's mailbox: admin.mail.example.com
+        Serial Number: 1234567890
+        Refresh Interval: 3600 (1 hour)
+        Retry Interval: 3600 (1 hour)
+        Expire limit: 3600 (1 hour)
+        Minimum TTL: 30 (30 seconds)
+[Unsolicited: True]
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>ARM64 VM for P4 | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="ARM64 VM for P4" />
+<meta name="author" content="Charles Reiss" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/p4-armvm.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/p4-armvm.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="ARM64 VM for P4" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss"},"headline":"ARM64 VM for P4","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/p4-armvm.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <p><em>[added 4 Oct:]</em> An addendum to the below:</p>
+<hr />
+<p>There is an error (probably caused by some version differences
+between utilities on the VM below), so after installation you might get
+an Python error about ’no field named <q>initial_default_action</q>. Per
+the <a href="https://github.com/p4lang/tutorials/issues/631">github
+link</a> on <a
+href="https://piazza.com/class/m08uxn41qau2ps/post/43_f1">this Piazza
+post</a>, the fix is:</p>
+<ul>
+<li>in /home/p4/tutorials/utils/p4runtime_lib/helper.py file that is
+referred to by the stack trace (probably 29), add ,
+allow_unknown_field=True to the google.protobuf.text_format.Merge call
+that is referred to by the stack trace.</li>
+</ul>
+<hr />
+<p>The following is via one of your fellow students Tavis Palmer:</p>
+<hr />
+<p>I was able to set up a P4 VM for arm64 (for use with Apple Silicon
+Macs). I tried to match it as close as possible to the x86_64 one
+provided, including the user accounts, .bashrc, and tutorials
+folder.</p>
+<p>I couldn’t get VirtualBox working on my Mac (despite there supposedly
+being an arm64 version now…), so here is an image compatible with VMWare
+Fusion (which is free now for personal use):</p>
+<p><a href="https://virginia.box.com/s/ip4urguxpf6gja4htcsnzygsmu6pcqza"
+class="uri">https://virginia.box.com/s/ip4urguxpf6gja4htcsnzygsmu6pcqza</a></p>
+<p>It’s very hard to find the installation link for VMWare Fusion
+through their website, so I would recommend to just install it with
+Homebrew, i.e.</p>
+<pre><code>brew install --cask vmware-fusion</code></pre>
+<p>Alternatively, you can get the link directly from the Homebrew Cask:
+<a
+href="https://softwareupdate.vmware.com/cds/vmw-desktop/fusion/13.6.0/24238079/universal/core/com.vmware.fusion.zip.tar"
+class="uri">https://softwareupdate.vmware.com/cds/vmw-desktop/fusion/13.6.0/24238079/universal/core/com.vmware.fusion.zip.tar</a></p>
+<p>Below is a short tutorial for anyone unfamiliar with using VMWare
+Fusion:</p>
+<p>To set up the VM, you want to first click the <q>+</q> in the top
+left corner of the UI, and select <q>New…</q>. From there, select
+<q>Create a custom virtual machine</q>:</p>
+<p><img src="arm64-setup1.png"></p>
+<p>On the next screen, select <q>Ubuntu 64-bit Arm</q>:</p>
+<p><img src="arm64-setup2.png"></p>
+<p>On the next screen, select <q>Use an existing virtual disk</q>, then
+<q>Choose virtual disk…</q> and select the .vmdk file downloaded from
+the UVA Box link:</p>
+<p><img src="arm64-setup3.png"></p>
+<p>Default settings should be fine here, but as the original x86_64 VM
+image has 4 CPU cores with 8 GB of memory allocated, you could go and
+change that here:</p>
+<p><img src="arm64-setup4.png"></p>
+<p>If anyone runs into any issues, please let me know and I will see
+what I can do. Hope this helps!</p>
+<p>— Tavis Palmer</p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

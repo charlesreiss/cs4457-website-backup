@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Wireless | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Wireless" />
+<meta name="author" content="Charles Reiss" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/wireless.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/wireless.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Wireless" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss"},"headline":"Wireless","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/wireless.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a></li>
+<li><a href="#using-the-simulation" id="toc-using-the-simulation"><span
+class="toc-section-number">2</span> Using the simulation</a></li>
+<li><a href="#notes-on-simulation-models"
+id="toc-notes-on-simulation-models"><span
+class="toc-section-number">3</span> Notes on simulation models</a></li>
+<li><a href="#hints" id="toc-hints"><span
+class="toc-section-number">4</span> Hints</a></li>
+</ul></nav>
+<div class="changelog">
+<p>Changelog:</p>
+<ul>
+<li>19 Nov 2025: adjust some formatting issues</li>
+<li>19 Nov 2025: update supplied git repository to use <q>higher target
+throughput</q> instead of <q>higher rate</q> in messages for better
+clarity; mention explicitly that –assignmentTestScenario runs the two
+configurations and compares the bytes sent</li>
+<li>20 Nov 2025: update supplied git repository to populate ARP tables,
+which prevents getting 0 bytes sent if ARP messages are lost, which can
+be somewhat random</li>
+<li>21 Nov 2025: add some (arguable) hints</li>
+<li>23 Nov 2025: added hint re: thinking about number of frames that
+must be sent per segment</li>
+<li>1 Dec 2025: change <q>5 scenarios</q> to <q>6 scenarios</q>;
+<q>numerical numbers</q> to <q>numerical values</q></li>
+</ul>
+</div>
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<ol type="1">
+<li><p>Download our copy of NS-3 (same git repository as for AIMD):</p>
+<pre><code>git clone -b cs4457-dist https://github.com/charlesreiss/ns-3-dev ./ns-3-dev</code></pre></li>
+<li><p>Look at the simulation in <code>scratch/wireless-ex.cc</code> of
+a wireless networking scenario with four nodes, where node 1 transmits
+to node 2 and node 3 transmits to node 4.</p>
+<p>The simulation has various parameters affecting the data rate
+transmitted and the wireless network configuration.</p>
+<p>In this assignment, we’ll be measuring the total number of bytes
+received by nodes 2 and 4.</p></li>
+<li><p>Your goal is to manipulate the <code>SetupPositions</code>
+functions to set the positions of the nodes so that one network
+configuration achieves better performance than another.</p>
+<p>In addition to completing the code for SetupPositions, you need to
+describe how you did so (see below), so make sure you keep track of any
+experiments or calculations you performed.</p>
+<p>We have 6 scenarios for you to choose position for, which are
+documented by running
+<code>./ns3 run scratch/wireless-ex  -- --listScenarios=true</code>:</p>
+<pre><code>Scenario #1
+With
+  --physicalMode=DsssRate1Mbps --sendRate=0.9Mbps --rtsCts=false --txPower=16 --retryCount=7 --useTcp=false
+send at least 150.0% of the bytes sent with
+  --physicalMode=DsssRate1Mbps --sendRate=0.9Mbps --rtsCts=false --txPower=3 --retryCount=7 --useTcp=false
+
+Scenario #2
+With
+  --physicalMode=DsssRate1Mbps --sendRate=0.9Mbps --rtsCts=false --txPower=3 --retryCount=7 --useTcp=false
+send at least 150.0% of the bytes sent with
+  --physicalMode=DsssRate1Mbps --sendRate=0.9Mbps --rtsCts=false --txPower=16 --retryCount=7 --useTcp=false
+
+Scenario #3
+With
+  --physicalMode=DsssRate1Mbps --sendRate=0.9Mbps --rtsCts=true --txPower=16.0206 --retryCount=7 --useTcp=false
+send at least 150.0% of the bytes sent with
+  --physicalMode=DsssRate5_5Mbps --sendRate=0.9Mbps --rtsCts=true --txPower=16.0206 --retryCount=7 --useTcp=false
+
+Scenario #4
+With
+  --physicalMode=DsssRate1Mbps --sendRate=0.45Mbps --rtsCts=true --txPower=16.0206 --retryCount=7 --useTcp=false
+send at least 180.0% of the bytes sent with
+  --physicalMode=DsssRate1Mbps --sendRate=0.45Mbps --rtsCts=false --txPower=16.0206 --retryCount=7 --useTcp=false
+
+Scenario #5
+With
+  --physicalMode=DsssRate1Mbps --sendRate=0.9Mbps --rtsCts=false --txPower=16.0206 --retryCount=7 --useTcp=false
+send at least 130.0% of the bytes sent with
+  --physicalMode=DsssRate1Mbps --sendRate=0.9Mbps --rtsCts=true --txPower=16.0206 --retryCount=7 --useTcp=false
+
+Scenario #6
+With
+  --physicalMode=DsssRate1Mbps --sendRate=0.25Mbps --rtsCts=false --txPower=16.0206 --retryCount=7 --useTcp=true
+send at least 150.0% of the bytes sent with
+  --physicalMode=DsssRate1Mbps --sendRate=0.25Mbps --rtsCts=false --txPower=16.0206 --retryCount=1 --useTcp=true</code></pre></li>
+<li><p>Produce a report in a text, HTML, or PDF file with, for each
+scenario:</p>
+<ul>
+<li><p>a brief description of why you think your scenario results in the
+desired bytes-received difference. (For example, what is happening the
+low-performance case that is not happening in the high-performance
+case.)</p></li>
+<li><p>a brief description of any calculations or experiments you
+performed to find the exact numerical values. For example, if you tried
+to find out the maximum range of a transmission by trying a bunch of
+positions, describe what result you determined, how you varied positions
+to do so, and what measurements you got doing this.</p></li>
+</ul></li>
+<li><p>Submit your code (as a .cc file) and your report to the
+submission site.</p></li>
+</ol>
+<h1 data-number="2" id="using-the-simulation"><span
+class="header-section-number">2</span> Using the simulation</h1>
+<ol type="1">
+<li><p>You can use a command like</p>
+<pre><code>./ns3 run scratch/wireless-ex -- --scenarioId=1 --physicalMode=DsssRate1Mbps \
+    --sendRate=0.9Mbps --rtsCts=false --txPower=3 --retryCount=7 --useTcp=false</code></pre>
+<p>to run with a specific set of parameters.</p></li>
+<li><p>You can adjust the duration with an option like
+<code>--duration=1s</code> if you want a shorter test to limit debug
+output.</p></li>
+<li><p>There are various options you can use to get more detailed debug
+output:</p>
+<ol type="1">
+<li><p>You can use <code>--flowDump=true</code> to get a count of the
+bytes sent between each pair of IP addresses, including differences
+between transmitted and received bytes/packets.</p></li>
+<li><p>You can use <code>--enablePcaps=true</code> to have pcap files
+written for each node. The files will be named like
+<code>wireless-ex-N-0.pcap</code>, where N is the node number. (The
+<code>0</code> is a device number; each node has one network device, its
+simulated wireless link.)</p></li>
+<li><p>You can use <code>--retransmitCountDump=true</code> to get a
+count of the number of packets retransmitted by each node.</p></li>
+<li><p>You can use <code>--enableWifiLogging=true</code> to get very
+detailed logging of events in the wifi simulation.</p></li>
+</ol></li>
+<li><p>As documented in <a
+href="https://www.nsnam.org/docs/manual/html/logging-asserts.html">the
+reelvant section of NS-3 manual</a>, you can set the NS_LOG enviroment
+variable to control what logging is enabled in NS-3.</p>
+<p>For example, since <code>scratch/wireless-ex.cc</code> declares
+<code>NS_LOG_COMPONENT_DEFINE("WirelessEx");</code> at the top, if you
+type</p>
+<pre><code>NS_LOG_INFO(&quot;This is a message where scenarioId = &quot; &lt;&lt; scenarioId);</code></pre>
+<p>and run scratch/wireless-ex like</p>
+<pre><code>NS_LOG=&quot;WirelessEx&quot; ./ns3 run scratch/wireless-ex ...</code></pre>
+<p>or NS_LOG=<q>WirelessEx=level_info</q> ./ns3 run scratch/wireless-ex
+…</p>
+<p>or export NS_LOG=WirelessEx … ./ns3 run scratch/wireless-ex …</p>
+<p>or similar, then that message will be output, including the actual
+value of the <code>scenarioId</code> variable.</p></li>
+<li><p>You can use <code>--verbose</code> to enable lots of logging of
+wireless behavior and the production of pcap files.
+<!-- FIXME: specific pcap option --></p></li>
+<li><p>You can use</p>
+<pre><code>./ns3 run scratch/wireless-ex -- --assignmentTestScenario=1</code></pre>
+<p>to test both the high target throughput/low target throughput case
+and see how their achieved bytes sent compares.</p></li>
+</ol>
+<h1 data-number="3" id="notes-on-simulation-models"><span
+class="header-section-number">3</span> Notes on simulation models</h1>
+<ol type="1">
+<li><p>The simulation uses (an approximation of) the 802.11b MAC
+protocol. The simulated links are all in <q>ad-hoc</q> mode, so there is
+not access point (base station); nodes just transmit directly to other
+nodes in range. There is no routing.</p></li>
+<li><p>The simulation determines the tranmission strength received using
+NS-3’s Friis propoagation loss model, documented <a
+href="https://www.nsnam.org/docs/release/3.17/doxygen/classns3_1_1_friis_propagation_loss_model.html">here</a></p></li>
+<li><p>The simulation ends up using NS_3’s DSSS (802.11b bit encoding)
+error rate model, described <a
+href="https://www.nsnam.org/~pei/80211b.pdf">here</a>. In particular,
+figure 1.2 shows the bit error rate (BER) used by the model for various
+transmission rates based on the signal to noise ratio (labeled SIR);
+figure 1.3 shows the packet reception rate versus signal strength when
+there is no interference.</p></li>
+</ol>
+<h1 data-number="4" id="hints"><span
+class="header-section-number">4</span> Hints</h1>
+<ol type="1">
+<li><p>I found it helpful to modify the .cc file to sweep through a
+bunch of distances after having an idea of a kind of placement that
+should be helpful, but not having it be immediately apparent what
+distances would work.</p></li>
+<li><p>The distance at which signals may interfere with each other is
+not the same as the distance at which they can be received
+well.</p></li>
+<li><p>If a configuration requires us to exchange more frames
+successfully/promptly to send one segment of data, then it’s likely to
+be more sensitive to poor reception/interference.</p></li>
+</ol>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

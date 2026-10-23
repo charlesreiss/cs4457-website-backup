@@ -1,0 +1,42 @@
+
+Length: 100
+Transaction ID: 0x021a
+Flags: 0x8400 Standard query response, No error
+    1... .... .... .... = Response: Message is a response
+    .000 0... .... .... = Opcode: Standard query (0)
+    .... .1.. .... .... = Authoritative: Server is an authority for domain
+    .... ..0. .... .... = Truncated: Message is not truncated
+    .... ...0 .... .... = Recursion desired: Don't do query recursively
+    .... .... 0... .... = Recursion available: Server can't do recursive queries
+    .... .... .0.. .... = Z: reserved (0)
+    .... .... ..0. .... = Answer authenticated: Answer/authority portion was not authenticated by the server
+    .... .... ...0 .... = Non-authenticated data: Unacceptable
+    .... .... .... 0000 = Reply code: No error (0)
+Questions: 1
+Answer RRs: 2
+Authority RRs: 0
+Additional RRs: 0
+Queries
+    foo.example: type A, class IN
+        Name: foo.example
+        [Name Length: 11]
+        [Label Count: 2]
+        Type: A (Host Address) (1)
+        Class: IN (0x0001)
+Answers
+    foo.example: type CNAME, class IN, cname bar.example
+        Name: foo.example
+        Type: CNAME (Canonical NAME for an alias) (5)
+        Class: IN (0x0001)
+        Time to live: 1000 (16 minutes, 40 seconds)
+        Data length: 13
+        CNAME: bar.example
+    bar.example: type CNAME, class IN, cname quux.other
+        Name: bar.example
+        Type: CNAME (Canonical NAME for an alias) (5)
+        Class: IN (0x0001)
+        Time to live: 1000 (16 minutes, 40 seconds)
+        Data length: 12
+        CNAME: quux.other
+[Unsolicited: True]
+

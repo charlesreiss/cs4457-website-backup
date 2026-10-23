@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Webserver | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Webserver" />
+<meta name="author" content="Charles Reiss" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/webserver.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/webserver.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Webserver" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss"},"headline":"Webserver","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/webserver.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a></li>
+<li><a href="#references" id="toc-references"><span
+class="toc-section-number">2</span> References</a></li>
+<li><a href="#testing-your-server" id="toc-testing-your-server"><span
+class="toc-section-number">3</span> Testing your server</a>
+<ul>
+<li><a href="#using-curl" id="toc-using-curl"><span
+class="toc-section-number">3.1</span> Using <code>curl</code></a></li>
+<li><a href="#using-nc" id="toc-using-nc"><span
+class="toc-section-number">3.2</span> Using <code>nc</code></a></li>
+<li><a href="#using-a-web-browser" id="toc-using-a-web-browser"><span
+class="toc-section-number">3.3</span> Using a web browser</a></li>
+</ul></li>
+<li><a href="#hints" id="toc-hints"><span
+class="toc-section-number">4</span> Hints</a>
+<ul>
+<li><a href="#bytes-in-python" id="toc-bytes-in-python"><span
+class="toc-section-number">4.1</span> Bytes in Python</a></li>
+<li><a href="#reading-requests" id="toc-reading-requests"><span
+class="toc-section-number">4.2</span> Reading requests</a></li>
+</ul></li>
+</ul></nav>
+<div class="changelog">
+<p>Changelog:</p>
+<ul>
+<li>6 Nov 2025: remove defunct changelog entries from last semester</li>
+</ul>
+</div>
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<ol type="1">
+<li><p>Using the standard Python <a
+href="https://docs.python.org/3/library/socket.html">socket</a> library,
+and any data structure and text encoding-related standard Python
+libraries of your choice<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>, create a webserver. Your webserver
+must:</p>
+<ul>
+<li>set the SO_REUSEADDR socket option on its server socket</li>
+<li>be startable by running
+<code>python3 webserver.py 127.0.0.1 PORT</code></li>
+<li>listen on IP address 127.0.0.1, port number PORT, and look for files
+in <code>webroot</code> directory in the directory where it is run
+from</li>
+<li>implement HTTP/1.1, where
+<ul>
+<li>only the GET or HEAD methods is supported; requests using any other
+method always return a <q>405 Method Not Allowed</q> error.</li>
+<li>GET requests for the path <code>/FOO</code> are handled as follows:
+<ul>
+<li>if <code>FOO</code> contains any <code>/</code>s <em>or</em> the
+file <code>FOO</code> does not exist in <code>webroot</code>, then the
+webserver returns a <q>404 Not Found</q> response whose body contains
+text of your choice.</li>
+<li>if <code>FOO</code> is <code>redirect-example</code>, returns a 301
+Moved Permanently response with a Location header specifying
+/redirect-target.html and text of your choice as the response body</li>
+<li>if <code>FOO</code> exists in webroot but is not readable, the
+webserver returns a <q>403 Not Authorized</q> response whose body
+contains text of your choice.</li>
+<li>otherwise, the webserver returns <q>200 OK</q> response whose body
+is the contents of the file <code>FOO</code> in webroot</li>
+</ul></li>
+<li>HEAD requests for the path <code>/FOO</code> are handled like GET
+requests, except no response body is returned.</li>
+<li>When returning a file from a GET request, if its extension
+<code>html</code> or <code>htm</code>, the <code>Content-Type</code>
+header is set to <code>text/html</code>; if its extension is
+<code>txt</code>, the <code>Content-Type</code> header is set to
+<code>text/plain</code>. Otherwise, the <code>Content-Type</code> header
+may be omitted or set as you choose.</li>
+<li>When returning a response with a message body, either include a
+correct <code>Content-Length</code> or use the <code>chunked</code>
+transfer encoding for the message body.</li>
+<li>Your server supports multiple requests in the same connection, as
+long as all of those requests are GET and HEAD requests.</li>
+</ul></li>
+</ul>
+<p>Your webserver only need to handle one connection at a time.</p></li>
+<li><p>Test your server, probably by using a utility like
+<code>curl</code>.</p></li>
+<li><p>Submit your webserver.py to the submission site.</p></li>
+</ol>
+<h1 data-number="2" id="references"><span
+class="header-section-number">2</span> References</h1>
+<ol type="1">
+<li><p><a href="https://www.rfc-editor.org/rfc/rfc9112.html">RFC
+9112</a> is the official specification for HTTP/1.1 (and <a
+href="https://www.rfc-editor.org/rfc/rfc9110.html">RFC 9110</a> is an
+official specification for HTTP more generally). You can find a
+friendlier introduction in <a
+href="https://book.systemsapproach.org/applications/traditional.html#world-wide-web-http">Section
+9.1.2 of <i>Computer Networks: A Systems Approach</i></a></p></li>
+<li><p>The reference documentation for the Python socket library is <a
+href="https://docs.python.org/3/library/socket.html">here</a>.</p>
+<p>There is a friendlier introduction in the official Python <a
+href="https://docs.python.org/3/howto/sockets.html">socket programming
+HOWTO</a>. If you remember the socket chat lab from CSO1, you may notice
+that since the Python socket library wraps the C API you used in CSO1,
+it follows the same structure.</p>
+<p>The socket API shows creating server sockets using
+<code>socket.socket</code> and <code>bind</code>; you might find it
+easier to use the <code>create_server</code> utility function as more
+readable shorthand.</p></li>
+</ol>
+<h1 data-number="3" id="testing-your-server"><span
+class="header-section-number">3</span> Testing your server</h1>
+<ol type="1">
+<li>If you are testing on a shared server and aren’t sure what ports are
+free, you can bind to port 0 to ask the OS to select port. Then you can
+use <code>ssock.getsockname()</code> (where <code>ssock</code> is your
+server socket name) to find out which port the OS selected.</li>
+</ol>
+<h2 data-number="3.1" id="using-curl"><span
+class="header-section-number">3.1</span> Using <code>curl</code></h2>
+<ol start="2" type="1">
+<li><p>You can use the Linux <code>curl</code> utility to make requests
+to your server. (<small><em>[added 11 Nov 2024]:</em></small>
+Confusingly, Windows PowerShell provides a command called
+<code>curl</code> which is missing many featuers we use in the commands
+below, and so will <strong>not</strong> work.)</p>
+<p>For example:</p>
+<pre><code>curl http://127.0.0.1:12345/foo.html</code></pre>
+<p>will make a GET request for foo.html.</p>
+<p>You can also:</p>
+<ul>
+<li><p>get more information about what’s sent over the connection with
+the <code>--verbose</code> option:</p>
+<pre><code> curl --verbose http://127.0.0.1:12345/foo.html</code></pre></li>
+<li><p>change the method of the request to HEAD with the –head
+option</p>
+<pre><code> curl --head http://127.0.0.1:12345/foo.html</code></pre></li>
+<li><p>make multiple requests by including multiple URLs on the command
+line:</p>
+<pre><code> curl --verbose http://127.0.0.1:12345/foo.html http://127.0.0.1:12345/bar.html</code></pre>
+<p>and read curl’s output will indicate whether it reused the same
+connection or it reconnected.</p></li>
+<li><p>change the method to something other than GET or HEAD with the
+–request option:</p>
+<pre><code> curl --request DELETE --verbose http://127.0.0.1:12345/someplace</code></pre>
+<p>and pass a request body while doing with the –data option:</p>
+<pre><code> curl --request POST --data &#39;This is the request body&#39; --verbose http://127.0.0.1:12345/someplace</code></pre></li>
+</ul></li>
+</ol>
+<h2 data-number="3.2" id="using-nc"><span
+class="header-section-number">3.2</span> Using <code>nc</code></h2>
+<ol start="2" type="1">
+<li><p>You can use the <code>nc</code> utility to connect to your server
+and send arbitrary data.</p>
+<p>If you run <code>nc -C 127.0.0.1 PORTNUMBER</code> (where
+<code>PORTNUMBER</code> is the port your server is running on), you can
+type a request like:</p>
+<pre><code>GET / HTTP/1.1&lt;enter&gt;
+Host: 127.0.0.1&lt;enter&gt;&gt;
+&lt;enter&gt;</code></pre>
+<p>and <code>nc</code> will send it, including CRLFs, and show you any
+response. On a Linux machine, you can type control-D to close the
+connection.</p>
+<p>You could also enter your request(s) into a text file and run a
+command like</p>
+<pre><code>nc -C 127.0.0.1 PORTNUMBER &lt; some-text-file.txt</code></pre>
+<p>to send <code>some-text-file.txt</code> to the server, followed by
+closing the connection.</p></li>
+</ol>
+<h2 data-number="3.3" id="using-a-web-browser"><span
+class="header-section-number">3.3</span> Using a web browser</h2>
+<ol type="1">
+<li><p>Provided that your web browser is running on the same machine as
+your server, you should be able to go to
+<code>http://127.0.0.1:PORTNUMBER/name.html</code> (where
+<code>PORTNUMBER</code> is the port your server is running on) and make
+a GET request for <code>/name.html</code></p>
+<p>In most web browsers, you can use <q>developer tools</q> to see which
+HTTP requests are being made, what HTTP resposnes were received and
+other details about them. Usually you can access these tools by using
+the menu, then going to <q>More tools</q>, then to an item labeled
+<q>Developer tools</q> or <q>Web Developer Tools</q>. After this, there
+will usually be a <q>Networking</q> tab on the developer tools that will
+show the relevant information (that fills in as you visit pages; it
+won’t show requests/resposnes retroactively).</p></li>
+</ol>
+<h1 data-number="4" id="hints"><span
+class="header-section-number">4</span> Hints</h1>
+<h2 data-number="4.1" id="bytes-in-python"><span
+class="header-section-number">4.1</span> Bytes in Python</h2>
+<ol type="1">
+<li><p>The socket functions in Python return and expect
+<code>bytes</code>, not <code>str</code> (strings). (<code>bytes</code>
+are composed of 8-bit bytes, but <code>str</code>s are composed of
+Unicode characters.)</p>
+<p>To get <code>bytes</code> instead of <code>str</code>s:</p>
+<ul>
+<li>open files in <q>binary</q> mode (for example
+<code>open('webroot/404.html', 'rb')</code> instead of
+<code>open('webroot/404.html', 'r')</code>)</li>
+<li>write constants like <code>b'foo'</code> instead of
+<code>'foo'</code></li>
+<li>given a string <code>s</code>, use something like
+<code>s.encode('UTF-8')</code> to convert it to a <code>bytes</code>
+object</li>
+</ul>
+<p>If you need to convert from a <code>bytes</code> object
+<code>b</code> to <code>str</code>, you can do something like
+<code>b.decode('UTF-8', errors='replace')</code>.
+<!-- FIXME: pointer to documentation --></p></li>
+</ol>
+<h2 data-number="4.2" id="reading-requests"><span
+class="header-section-number">4.2</span> Reading requests</h2>
+<ol type="1">
+<li><p>When you call <code>recv</code>, it will read whatever bytes are
+available, this may or may not be a full request. You may need to call
+recv multiple times to read enough of a request to figure out what to
+do.</p>
+<p>Since a request’s headers are always terminated by two CRLFs<a
+href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>, I would recommend calling
+<code>recv</code> in a loop, accumulating the bytes received into a
+buffer, until the buffer contains a doubled CRLF. At that point, you
+would have a full set of request headers.</p></li>
+<li><p>When dealing with multiple requests, note that it’s possible that
+you can read parts of multiple requests in a single <code>recv</code>
+call.</p>
+<p>In my implementatoin, I dealt with this by adding the result of the
+<code>recv</code> calls to the end of a buffer. Then, I would check if
+that buffer contained a full request. If it did, I would remove that
+request from the beginning of the buffer, but keep the buffer around for
+the next request.</p></li>
+</ol>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>You may <em>not</em> use other Python libraries for
+handling URIs or HTTP.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>CRLF is an 0x0d (decimal 13) byte followed by an 0x0a
+(decimal 10) byte.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

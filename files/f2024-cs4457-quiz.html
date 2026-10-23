@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>CS4457-Fall2024</title>
+        <meta charset="utf-8">
+        <link rel="icon" type="image/svg+xml" href="favicon.svg">
+        <link rel="stylesheet" href="style.css">
+        <?php if (isset($_GET['view_only'])) { ?>
+        <style>
+            body { background:#fdb; }
+            .directions, .multiquestion { background: #fed;  }
+        </style>
+        <?php
+        }
+        ?>
+        
+        <link rel="stylesheet" href="katex/katex.min.css">
+        <script type="text/javascript" src="katex/katex.min.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelectorAll('span.mymath').forEach(x => 
+                    katex.render(x.textContent, x, 
+                        {throwOnError:false, displayMode:false})
+                )
+                document.querySelectorAll('div.mymath').forEach(x => 
+                    katex.render(x.textContent, x, 
+                        {throwOnError:false, displayMode:true})
+                )
+            });
+        </script>
+    </head>
+    <body>
+    <h1>CS4457-Fall2024</h1>
+    
+﻿
+<h1 style='text-align:center'>quiz for week 1</h1><div class='directions'></div><div class='question' id='q1' slug='f0481c3b'><div class='description' id='d1'><strong>Question 1</strong> (4 points)
+<p>Suppose a web browser is being used view a video and, at the same time,
+download a large archive of a software update from the same webserver.</p>
+
+<p>The browser and server desire that the video download take priority
+over the archive download to ensure that it does not stutter.</p>
+
+<p>Which of the following ideas for implementing this prioritization
+is <em>most</em> consistent with the end-to-end principle we discussed in
+lecture?</p>
+</div><ol class="options"><li><label><input type='radio' name='ans1' value='53abc45a' /><div><p>the web browser uses wifi for the low-priority software update and a wired network for the higher-priority video</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='5f5a5010' /><div><p>the web browser and web server mark the packets they send related to the video as higher priority, so switches and routers can forward them before the lower-priority software update</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='414f9212' /><div><p>the web server makes sure it sends two chunks of video for every chunk of the software update it sends</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='1166033b' /><div><p>the web server and web browser check with the router on the other end its of wired or wifi connection to see how busy it is, and avoid requesting or sending parts of the software update if they are too busy</p>
+</div></label></li></ol></div><div class="multiquestion"><p>Consider the following bit-based framing scheme discussed in lecture:</p>
+
+<ul>
+<li>messages are separated by 010 and a 01 that appears in a message
+is replaced by 011</li>
+<li>messages are required to be at least 1 bit in length</li>
+</ul>
+<div class='question' id='q2' slug='0aa1006d'><div class='description' id='d2'><strong>Question 2</strong> (4 points) (see above)
+<p>Consider the following encoding of the messages <code>111011</code> and <code>000100</code>.
+Spaces are added for clarify and bits outside of the
+beginning/end message separators labeled with the letters a through q:</p>
+
+<pre><code>010 1110111 010 0001100 010
+    abcdefg hij klmnopq 
+</code></pre>
+
+<p>If <strong>one</strong> bit is flipped, sometimes the number of decoded messages could change.
+In other occassions, only the contents of the decoded messages will change.</p>
+
+<p>Using the letters <code>a</code> through <code>q</code> identify which bits would change
+the number of decoded messsages if flipped. (Assume only one bit is
+flipped at a time.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans2' /></div></div><div class='question' id='q3' slug='0cd1fb92'><div class='description' id='d3'><strong>Question 3</strong> (4 points) (see above)
+<p>Suppose we transmit 100 messages. Each message is 100 bits, and
+each message contains 12 <code>01</code>s.</p>
+
+<p>How much space, in bits, will be used to transmit these message?
+(If more information is needed, write "unknown" and explain in the comments.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans3' /></div></div></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 2</h1><div class='directions'></div><div class='question' id='q1' slug='9c3eaf8b'><div class='description' id='d1'><strong>Question 1</strong> (4 points)
+<p>In lecture, we mentioned that most switches are store-and-forward,
+but that it is possible to make <em>cut-through</em> switches that send
+a packet on an output link while the switch is receiving it from its
+input link.</p>
+
+<p>Consider a network where machine A and machine B are connected
+via switch S. The link from machine A to switch S is 100 meters
+long, using copper which has a bandwidth of 1Gbit/sec
+and a signal propagation rate of 2.8 times 10^8 m/s.
+The link from switch S to machine B is the same.</p>
+
+<p>We send 1000-byte packets, which have the information
+the switch needs to determine where to send the packets in the first 8 bytes.
+If the switch's queues are always empty when a packet arrives,
+by about how would the latency for a packet to be sent from A to B be <strong>reduced</strong> by using
+using a <em>cut-through</em> switch instead of a <em>store-and-forward</em>
+switch?</p>
+
+<p>Write your answer as an integer number of nanoseconds. (If additional information
+is needed, make your best guess and explain your assumptions in the comments.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans1' /></div></div><div class="multiquestion"><p>The following questions are about sending data from machine A to machine B
+where each frame can hold up to 1000 bytes of data (plus any metadata like sequence
+numbers needed by the protocol).</p>
+
+<p>In these questions, machine A and machine B are connected via
+a link with a latency of 1 millisecond for each packet
+(regardless of its size)
+which can send one packet every 0.1 milliseconds
+(regardless of its size).
+(So, sending several packets right after each other would
+result in the first packet being received in 1 millisecond,
+the second in 1.1 milliseconds, and so on.)
+They use a timeout of 2.5 milliseconds whenever a timeout is
+required by the protocol.</p>
+<div class='question' id='q2' slug='801bab0d'><div class='description' id='d2'><strong>Question 2</strong> (4 points) (see above)
+<p>If we send 17500 bytes using the <em>stop-and-wait</em> protocol discussed in lecture,
+then, if there are no packets dropped or otherwise lost/corrupted,
+this will take about ___ milliseconds from when machine A starts sending
+the data until when machine B receives all the data.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans2' /></div></div><div class='question' id='q3' slug='a2c4496e'><div class='description' id='d3'><strong>Question 3</strong> (4 points) (see above)
+<p>If we send 17500 bytes using the <em>stop-and-wait</em> protocol discussed in lecture,
+then, if the first acknowledgement of the first piece of data and
+the first acknowledgment of the sceond piece of data are both lost,
+then the data will require ___ extra milliseconds to transmit.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans3' /></div></div></div><div class="multiquestion"><p>Suppose we are using the <em>sliding window</em> algorithm discussed in lecture with
+a window size of 3.</p>
+<div class='question' id='q4' slug='626916a6'><div class='description' id='d4'><strong>Question 4</strong> (3 points) (see above)
+<p>Suppose the following sequence of events happens at the receiver:</p>
+
+<ul>
+<li>receive new data with sequence number 0</li>
+<li>send ACK with sequence number 0</li>
+<li>receive new data with sequence number 1</li>
+<li>send ACK with sequence number 1</li>
+<li>receive new data with sequence number 2</li>
+<li>send ACK with sequence number 2</li>
+<li>receive new data with sequence number 3</li>
+<li>receive new data with sequence number 5</li>
+<li>re-receive data with sequence number 0</li>
+</ul>
+
+<p>Which of the following would make the most sense for the
+receiver to do next?</p>
+</div><ol class="options"><li><label><input type='radio' name='ans4' value='7d2c01cd' /><div><p>send ACK with sequence number 0</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='74a2656f' /><div><p>send ACK with sequence number 2</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='6612692c' /><div><p>send ACK with sequence number 3</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='9c17a0b6' /><div><p>send ACK with sequence number 5</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='2e4132de' /><div><p>wait without sending anything until another message is received</p>
+</div></label></li></ol></div><div class='question' id='q5' slug='a9b9c0a5'><div class='description' id='d5'><strong>Question 5</strong> (3 points) (see above)
+<p>Suppose the following sequence of events happens at the sender:</p>
+
+<ul>
+<li>send new data with sequence number 0</li>
+<li>send new data with sequence number 1</li>
+<li>send new data with sequence number 2</li>
+<li>receive ACK with sequence number 0</li>
+<li>send new data with sequence number 3</li>
+<li>receive ACK with sequence number 0</li>
+</ul>
+
+<p>Which of the following would make the most sense for
+the sender to do next?</p>
+</div><ol class="options"><li><label><input type='radio' name='ans5' value='c9a1b062' /><div><p>resend data with sequence number 0</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='1745369f' /><div><p>resend data with sequence number 1</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='094f8a10' /><div><p>resend data with sequence number 2</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='57a8499b' /><div><p>resend data with sequence number 3</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='cb29bb03' /><div><p>send new data with sequence number 4</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='1c2f0ca1' /><div><p>wait without sending anything until another message is received</p>
+</div></label></li></ol></div></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 3</h1><div class='directions'></div><div class="multiquestion"><p>Suppose two machines are connected via a network such that they have 10 ms latency between them.
+(Assume for this question that the latency stays the same no matter how busy the network is,
+that is, queuing delay and transmission delay are negligible.)</p>
+
+<p>Suppose one machine sends a 1000000 byte file in segments that each contain 1000 bytes a data
+using a sliding window protocol with a sender window size of 6,
+an arbitrarily large receiver window size, and a sender timeout of 30ms.</p>
+<div class='question' id='q1' slug='6d647f09'><div class='description' id='d1'><strong>Question 1</strong> (4 points) (see above)
+<p>How long from when the machine starts sending until the last byte of the file is received?
+Assume there is no packet loss.
+Write your answer as an integer number of milliseconds.
+(Do not include any extra time needed to acknowledge that last byte.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans1' /></div></div><div class='question' id='q2' slug='ff8227d8'><div class='description' id='d2'><strong>Question 2</strong> (4 points) (see above)
+<p>Suppose the second sent data segment is lost on its way from the sender to receiver.</p>
+
+<p>The sender detects the lost packet via duplicate ACKs (instead of just relying on timeout), using TCP's heuristic
+of resending the packet upon receiving the third duplicate ACK. How much time will
+the lost packet add to the total transmission time for the data?
+Write your answer as a whole number of milliseconds. (Write 0 if no extra time will be needed.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans2' /></div></div></div><div class="multiquestion"><p>Suppose one obtains a packet trace of a TCP connection from machine A, and it contains
+segments with the following attributes, all of which are part of the same
+TCP connection (that was established before the trace starts) and were received/sent in this order:</p>
+
+<ol>
+<li>A->B: sequence number 10000, acknowledgement number 10000, data length 1000</li>
+<li>A->B: sequence number 11000, acknowledgement number 10000, data length 1000</li>
+<li>B->A: seqeunce number 10000, acknowledgement number 10000, data length 1000</li>
+<li>B->A: seqeunce number 13000, acknowledgement number 10000, data length 1000</li>
+<li>B->A: seqeunce number 14000, acknowledgement number 10000, data length 1000</li>
+<li>B->A: seqeunce number 15000, acknowledgement number 12000, data length 1000</li>
+</ol>
+
+<p>(Recall that:</p>
+
+<ul>
+<li>a TCP packet with sequeunce number N and length X, contains bytes with index N, N+1, N+2, ..., up to and including N+X-1</li>
+<li>a TCP packet with acknowledgment number N acknowledges bytes up to and including N-1</li>
+</ul>
+
+<p>)</p>
+<div class='question' id='q3' slug='03217daa'><div class='description' id='d3'><strong>Question 3</strong> (3 points) (see above)
+<p>Assume the network did not reorder packets.
+Then, based on this sequence of packets, <strong>machine B</strong>
+______ the data sent by machine A during the trace above before the end of the trace above.</p>
+</div><ol class="options"><li><label><input type='radio' name='ans3' value='8077d051' /><div><p>did not acknowledge</p>
+</div></label></li><li><label><input type='radio' name='ans3' value='362cda87' /><div><p>acknowledged some but not all of</p>
+</div></label></li><li><label><input type='radio' name='ans3' value='c2c8507a' /><div><p>acknowledged all of</p>
+</div></label></li></ol></div><div class='question' id='q4' slug='2e634754'><div class='description' id='d4'><strong>Question 4</strong> (4 points) (see above)
+<p>Assuming it received only the packets shown in the trace, <strong>machine A's</strong> next segment should be sent
+with acknowledgment number ____. If not enough information is given, write "unknown" and explain in the comments.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans4' /></div></div></div><div class='question' id='q5' slug='d063b296'><div class='description' id='d5'><strong>Question 5</strong> (4 points)
+<p>Consider the following P4 snippet:</p>
+
+<pre><code>struct header1_t {
+    bit&lt;32&gt; a;
+    bit&lt;32&gt; b;
+    bit&lt;8&gt; c;
+}
+
+struct header2_t {
+    bit&lt;32&gt; d;
+    bit&lt;8&gt; e;
+}
+
+struct header3_t {
+    bit&lt;32&gt; f;
+}
+
+headers {
+    header1_t h1;
+    header2_t h2;
+    header3_t h3;
+}
+
+parser MyParser(packet_in packet, out headers hdr, inout metadata meta, inout standard_metadata_t standard_metadata) {
+    state start {
+        transition parse_h1;
+    }
+    state parse_h1 {
+        packet.extract(hdr.h1);
+        transition select(hdr.h1.c) {
+            1: parse_h2;
+            2: parse_h3_b;
+            default: parse_h3_a;
+        }
+    }
+    state parse_h2 {
+        packet.extract(hdr.h2);
+        transition select(hdr.h2.e) {
+            1: parse_h3_a;
+            default: accept;
+        }
+    }
+    state parse_h3_a {
+        packet.extract(hdr.h3);
+        transition accept;
+    }
+
+    state parse_h3_b {
+        packet.extract(hdr.h3);
+        transition parse_h2;
+    }
+}
+</code></pre>
+
+<p><em>[Note: the original version of the code above had <code>1: parse_h3;</code> instead of <code>1: parse_h3_a;</code>, which didn't make much sense
+since there was no <code>pares_h3</code> state. We intend to drop any options below directly affected by this error.]</em></p>
+
+<p>Based on the format this parser accepts, which of the following packet formats are possible ? <strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans5' value='d49e4060' /><div><p>a packet with only a header1 header</p>
+</div></label></li><li><label><input type='checkbox' name='ans5' value='c22bf7ed' /><div><p>a packet with a header1 header followed by a header2 header (and no header3 header)</p>
+</div></label></li><li><label><input type='checkbox' name='ans5' value='8d3b328e' /><div><p>a packet with a header1 followed by a header3 header followed by a header2 header</p>
+</div></label></li><li><label><input type='checkbox' name='ans5' value='df4f5d11' /><div><p>a packet with a header1 followed by a header2 header followed by a header3 header</p>
+</div></label></li><li><label><input type='checkbox' name='ans5' value='c29338e4' /><div><p>a packet with a header3 header followed by a header2 header followed by a header1 header</p>
+</div></label></li><li><label><input type='checkbox' name='ans5' value='5cc779de' /><div><p>a packet with a header1 header followed by a header3 header (and no header2 header)</p>
+</div></label></li></ol></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 4</h1><div class='directions'></div><div class='question' id='q1' slug='897c9a45'><div class='description' id='d1'><strong>Question 1</strong> (4 points)
+<p>Write in CIDR notation the <strong>smallest</strong> block of
+addreses which share common leading bits
+that include all of:</p>
+
+<pre><code>2001:db8:312:5::1f:1f
+2001:db8:312:5::1f:f0
+2001:db8:312:995::2001:fdb8
+2001:db8:312:ff::1
+</code></pre>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans1' /></div></div><div class="multiquestion"><p>Suppose machines A, B, C, and D are connected to a switched Ethernet network
+with two switches S1 and S2.  Machines A and B are directly connected to S1; machines C and
+D are direclty connected to S2; and S1 and S2 are directly connected to each other.</p>
+<div class='question' id='q2' slug='d25c934b'><div class='description' id='d2'><strong>Question 2</strong> (2 points) (see above)
+<p>If machine A sends a frame to the ethernet broadcast address (FF:FF:FF:FF:FF:FF)
+then ____ copies of this frame will be sent on the link between S1 and S2.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans2' /></div></div><div class='question' id='q3' slug='d0cdc317'><div class='description' id='d3'><strong>Question 3</strong> (4 points) (see above)
+<p>Before machine A sends its first IPv4 packet to machine D, it will most likely ____.
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans3' value='22a47244' /><div><p>send a message that will be received by machines B, C, and D asking for machine D's MAC address</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='c88a6971' /><div><p>send and receive messages in order to determine the way to reach machine D involves switches S1 and S2</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='c4dc9382' /><div><p>send that first IP packet to the ethernet broadcast address (<code>FF:FF:FF:FF:FF:FF</code>)</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='1deef688' /><div><p>send a message to S2 to reserve bandwidth to machine D</p>
+</div></label></li></ol></div><div class='question' id='q4' slug='913df3c2'><div class='description' id='d4'><strong>Question 4</strong> (3 points) (see above)
+<p>Switch S1 will have a table associating _____.</p>
+</div><ol class="options"><li><label><input type='radio' name='ans4' value='94043064' /><div><p>the IP address of machine C with the output port that goes to switch S2</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='5367943c' /><div><p>the IP address of machine C with the MAC address of switch S2</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='c3870721' /><div><p>the MAC address of machine C with the MAC address of switch S2</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='da6aabd5' /><div><p>the MAC address of machine C with the output port that goes to switch S2</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='56e2e293' /><div><p>more than one of the above (explain <em>briefly</em> in comments)</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='c2bd9fdd' /><div><p>none of the above (explain <em>briefly</em> in comments)</p>
+</div></label></li></ol></div></div><div class='question' id='q5' slug='4f62070a'><div class='description' id='d5'><strong>Question 5</strong> (4 points)
+<p>When a host connects to a network using DHCP, it will normally learn
+about ____ from the DHCP reply. <strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans5' value='9f1697fc' /><div><p>the IP address of its DHCP server</p>
+</div></label></li><li><label><input type='checkbox' name='ans5' value='7184d8d8' /><div><p>the MAC address of its gateway machine (the machine it should use for its default IPv4 route)</p>
+</div></label></li><li><label><input type='checkbox' name='ans5' value='31a5c97b' /><div><p>the IP address of its gateway machine</p>
+</div></label></li><li><label><input type='checkbox' name='ans5' value='18f2a348' /><div><p>the range of MAC addresses present on the local network</p>
+
+<!-- FIXME: 
+    DHCP question
+
+something about broadcast loops and amount of extra copies in broadcast
+    something  about correct values in routing table
+    something about trivial routing tables
+    something about diff between routing table and switchign tables 
+    P4 (last week?): something about two table lookups and what you can do -->
+</div></label></li></ol></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 5</h1><div class='directions'></div><div class='question' id='q1' slug='49eb4f8a'><div class='description' id='d1'><strong>Question 1</strong> (4 points)
+<p>Consider using a connection that uses sequence number and ACK numbers that represent packet numbers
+(similar to the reliable2). 
+The sender has a initial window size of 8 packets and does the following
+in this order:</p>
+
+<ul>
+<li>receives an ACK for sequence number 4</li>
+<li>sends a data packet with sequence number 12</li>
+<li>receives an ACK for sequence number 5</li>
+<li>receives an ACK for sequence number 6</li>
+<li>receives an ACK for sequence number 6</li>
+<li>receives an ACK for sequence number 6</li>
+</ul>
+
+<p>Based on this sequence of events, 
+estimate the number of data or ACK pacekts currently being
+transmitted across the network for the connection.
+Write your estimate down below.
+Describe any needed assumptions in the comments.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans1' /></div></div><div class='question' id='q2' slug='61742c61'><div class='description' id='d2'><strong>Question 2</strong> (4 points)
+<p>Suppose a link can handle at most 30 packets per round-trip-time before packets are dropped.</p>
+
+<p>If we use TCP-style "slow start" and start at a window size of 1 packet,
+we would expect the first packet loss to occur after about ___ round-trip-times.
+(Assume that we have an unlimited amount of data available to send.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans2' /></div></div><div class="multiquestion"><p>Suppose we have a network with three hosts, A, B, and C.</p>
+
+<p>Hosts A and B are connected to a switch S1. The switch S1 is connected to a switch S2. The switch S2 is connected to host C.</p>
+
+<p>Each link in the network has a capacity of 1000 data packets/second and 10000 ACK-only packets/second in each direction and a latency of 10 ms.</p>
+<div class='question' id='q3' slug='5e26e66e'><div class='description' id='d3'><strong>Question 3</strong> (4 points) (see above)
+<p>Suppose there is a connection sending data from A to C. Assume this connection uses the standard TCP congestion control we described in lecture
+(with additive increase and multiplicative decrease by halving, fast retransmit, etc.), and the connection always has data to send.
+After the connection gets setup, we would expect its window size to range from around ____ packets to around ____ packets.
+Write your answer as two numbers separated by a comma.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans3' /></div></div><div class='question' id='q4' slug='dcf4675a'><div class='description' id='d4'><strong>Question 4</strong> (4 points) (see above)
+<p>Suppose there are two connections sending data from A to C, and one connection sending data from B to C.
+Assume all connections can send an unlimited amount of data (subject to the network's capacity) and use TCP-style congestion control.</p>
+
+<p>We would expect the connection from B to C to achieve a bandwidth of approximately _____ data packets/second.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans4' /></div></div></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 6</h1><div class='directions'></div><div class='question' id='q1' slug='4d21ebf0'><div class='description' id='d1'><strong>Question 1</strong> (4 points)
+<p>Suppose we want to implement congestion control based on latency that keeps the queue length less 
+10 packets.
+If each packet takes 1 ms to transmit (so the transmission delay is 1 ms), our congestion control scheme should decrease
+its window size if _____.</p>
+</div><ol class="options"><li><label><input type='radio' name='ans1' value='18a1854b' /><div><p>any round-trip-time exceeds 10 ms</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='bdb96467' /><div><p>any round-trip-time exceeds 20 ms</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='5af6587f' /><div><p>the recent average round-trip-time is 10 ms over the minimum recent round trip time</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='5433a48b' /><div><p>the recent average round-trip-time is 20 ms over the minimum recent round trip time</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='87e65de1' /><div><p>the recent average round-trip-time is 10% more than the minimum recent round-trip-time</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='5262389c' /><div><p>the recent average round-trip-time is 10 times more than the minimum recent round-trip-time</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='ae3c3c10' /><div><p>the recent average round-trip-time for a large data packets is 10 ms more than the recent average round-trip-time for short data packets</p>
+</div></label></li><li><label><input type='radio' name='ans1' value='5d012900' /><div><p>none of the above (explain in comments)</p>
+</div></label></li></ol></div><div class='question' id='q2' slug='22d694d4'><div class='description' id='d2'><strong>Question 2</strong> (4 points)
+<p>It's possible to achieve full utilization of a link if we carefully time when we send packets. But in practice we
+do not synchronize packets exactly, if we provide enough packets to fully utilize a link,
+we are likely to experience ____. <strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans2' value='3c1ff88f' /><div><p>high packet loss</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='1d579723' /><div><p>high latencies</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='79db5c32' /><div><p>high checksum validation failure rates</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='c4ef23cd' /><div><p>high window sizes</p>
+</div></label></li></ol></div><div class="multiquestion"><p>Suppose three flows A, B and C go through a shared link, and
+the router that feeds that link uses a strict-priority
+basd on queuing strategy where flow A has priority over flow B
+which has priority over flow C.</p>
+
+<p>The link can handle 1000 packets/second,
+flow A sends 500 packets/second, flow B sends 300 packets/second
+and flow C sends 300 packets/second.</p>
+<div class='question' id='q3' slug='46826eaa'><div class='description' id='d3'><strong>Question 3</strong> (2 points) (see above)
+<p>What is the expected packet loss rate (in percent) for
+flow A? (Round to the nearest whole number.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans3' /></div></div><div class='question' id='q4' slug='2b4323be'><div class='description' id='d4'><strong>Question 4</strong> (2 points) (see above)
+<p>What is the expected packet loss rate (in percent) for
+flow C? (Round to the nearest whole number.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans4' /></div></div></div><div class='question' id='q5' slug='77f62988'><div class='description' id='d5'><strong>Question 5</strong> (4 points)
+<p>Suppose we use fair queuing with two flows A, B, and C. Initially
+no packets are being transmitted,
+then the following packets arrive in this order
+before any packets can be transmitted:</p>
+
+<ul>
+<li>a 100-bit packet from A</li>
+<li>a 150-bit packet from A</li>
+<li>a 150-bit packet from A [packet X]</li>
+<li>a 350-bit packet from B</li>
+<li>a 150-bit packet from B [packet Y]</li>
+<li>a 350-bit packet from B</li>
+<li>a 50-bit packet from C</li>
+<li>a 100-bit packet from C</li>
+<li>a 50-bit packet from C</li>
+<li>a 120-bit packet from C</li>
+<li>a 50-bit packet from C [packet Z]</li>
+<li>a 50-bit packet from C</li>
+</ul>
+
+<p>Which is the best order in which to transmit packets X, Y and Z
+(relative to each other)? (Assume the other packets are still being
+transmitted, but we just aren't asking about their.)</p>
+</div><ol class="options"><li><label><input type='radio' name='ans5' value='17b414a0' /><div><p>X before Y before Z</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='a1059afa' /><div><p>X before Z before Y</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='9f327473' /><div><p>Y before X before Z</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='6acc1c4a' /><div><p>Y before Z before X</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='eaf8b61d' /><div><p>Z before X before Y</p>
+</div></label></li><li><label><input type='radio' name='ans5' value='71991642' /><div><p>Z before Y before X</p>
+</div></label></li></ol></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 7</h1><div class='directions'></div><div class="multiquestion"><p>Suppose we have a network where:</p>
+
+<ul>
+<li>router A, B, C, and D are each connected to each other via direct links</li>
+<li>router A is connected to a network 10.0.1.0/24, B to 10.0.2.0/24, C to 10.0.3.0/24,
+D to 10.0.4.0/24; and each other router is configured to forward packets destined
+for these networks to the appropriate router via the direct link</li>
+<li>each router acts as the gateway for machines on the 10.0.X.0/24 network they are
+connected to</li>
+<li>for the network 10.0.5.0/24, the routers have an erroneous set of routes:
+
+<ul>
+<li>router A forwards packets destined for this network to router B</li>
+<li>router B forwards packets destined for this network to router C</li>
+<li>router C forwards packets destined for this network to router A</li>
+<li>router D forwards packets destined for this network to router A</li>
+</ul></li>
+<li>the routers generate ICMP errors when appropriate (rather than just dropping packets
+that cause errors)</li>
+<li>the point-to-point links between routers support a maximum IP packet size of 1300 bytes,
+but the 10.0.X.0/24 networks support a maximum IP packet size of 1500 bytes</li>
+</ul>
+<div class='question' id='q1' slug='a3430984'><div class='description' id='d1'><strong>Question 1</strong> (4 points) (see above)
+<p>If a 100-byte (size including TCP and IP header)
+TCP packet is sent from 10.0.4.2 to 10.0.5.2 with an initial time-to-live of 16,
+then this will result in ____ frames containing TCP packets and ___ frames containing
+ICMP packets being sent over the point-to-point links between the routers. 
+(Assume there is no packet fragmenting or errors other than from routing.)
+Write your answer as two numbers seperated by a comma (like "1000,50").</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans1' /></div></div><div class='question' id='q2' slug='634d0b83'><div class='description' id='d2'><strong>Question 2</strong> (4 points) (see above)
+<p>Suppose 10.0.2.5 sends a 1400-byte (size including TCP and IP header) TCP packet to 10.0.3.6,
+and the IP header marks this packet as "don't fragment".
+Then 10.0.2.5 will receive an ICMP message containined in an IP packet with a source
+IP address of ____.</p>
+</div><ol class="options"><li><label><input type='radio' name='ans2' value='e56f46c3' /><div><p>10.0.3.6</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='7b3c1960' /><div><p>10.0.2.5</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='a6b72bfb' /><div><p>one of router B's IP addresses</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='eaa0abc0' /><div><p>one of router C's IP addresses</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='451ad3aa' /><div><p>none of the above (explain in comments)</p>
+</div></label></li></ol></div></div><div class="multiquestion"><p>Suppose the following network is in the middle of
+running the spanning tree protocol discussed in lecture:</p>
+
+<p><img src="//www.cs.virginia.edu/~cr4bd/4457/F2024/files/f2024week07graph1.svg" height="600"
+alt="diagram with nodes labeled A through H. There are solid links A-B,B-D,B-E,E-H,C-F,F-G,C-I. There are dashed links E-C,H-C,G-C,E-I,A-C,J-C."></p>
+
+<p>In the diagram above solid lines represent links that are enabled
+(part of the spanning tree and not blocked) and
+dashed lines represent links that are currently not in the tree.</p>
+
+<p>Assume that for each solid link,
+nodes on both sides of the link have exchanged their latest spanning tree protocol information.</p>
+
+<p>In this algorithm, assume that nodes give priority to (in order):</p>
+
+<ul>
+<li>choosing a root with the lowest (alphabetically first) ID;</li>
+<li>choosing an edge toward the root with the lowest ID;</li>
+</ul>
+
+<p>The tree is currently in an incomplete state because spanning tree information has not
+been exchanged across all necessary links.</p>
+<div class='question' id='q3' slug='2411075d'><div class='description' id='d3'><strong>Question 3</strong> (4 points) (see above)
+<p>According to C's current state, it is the root of the tree.</p>
+
+<p>Based on the current state of the tree, if certain nodes send an update ot C
+as part of the spanning tree protocol,
+C will update its current state to reflect that A is instead of the root of the tree. For which
+nodes may this be true? <strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans3' value='b89cf764' /><div><p>node A</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='b65373f1' /><div><p>node E</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='0178624b' /><div><p>node H</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='f3950f92' /><div><p>node J</p>
+</div></label></li></ol></div></div><div class="multiquestion"><p>Suppose a router A has following routes in its routing table:</p>
+
+<ul>
+<li>to 10.0.1.0/24 via port 0 (no gateway), cost 1</li>
+<li>to 10.0.2.0/24 via port 1 (no gateway), cost 1</li>
+<li>to 10.0.3.0/24 via port 2 (no gateway), cost 1</li>
+<li>to router B via port 0, cost 1</li>
+<li>to router C via port 1, cost 1</li>
+<li>to 10.0.4.0/24 via port 0 and a gateaway (next hop) of router B, cost 3</li>
+<li>to 10.0.5.0/24 via port 1 and a gateaway (next hop) of router C, cost 4</li>
+<li>to 10.0.6.0/24 via port 1 and a gateaway (next hop) of router C, cost 5</li>
+<li>to 10.0.7.0/24 via port 1 and a gateaway (next hop) of router B, cost 3</li>
+</ul>
+
+<p>The costs in the routing table represent the metric used to decide routes via
+a distance-vector protocol. Thus, A's distance vector can be constructed by
+reading out the routes and costs in the table.</p>
+
+<p>Assume router A is only adjacent to routers B and C.</p>
+<div class='question' id='q4' slug='36be817f'><div class='description' id='d4'><strong>Question 4</strong> (4 points) (see above)
+<p>Suppose router A receives the following distance vector from router C:</p>
+
+<ul>
+<li>10.0.1.0/24, cost 2</li>
+<li>10.0.2.0/24, cost 1</li>
+<li>10.0.3.0/24, cost 4</li>
+<li>10.0.4.0/24, cost 1</li>
+<li>10.0.5.0/24, cost 3</li>
+<li>10.0.6.0/24, cost 2</li>
+<li>10.0.7.0/24, cost 10</li>
+</ul>
+
+<p>Based on this, it should update its routing table entries for 
+____. Consider a routing table entry to be updated if its next hop (port and gateway) will change 
+and/or its cost will change. <strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans4' value='f1a84823' /><div><p>10.0.4.0/24</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='82b18e17' /><div><p>10.0.5.0/24</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='46bcce20' /><div><p>10.0.6.0/24</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='87d39e62' /><div><p>10.0.7.0/24</p>
+</div></label></li></ol></div></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 8</h1><div class='directions'></div><div class="multiquestion"><p>Consider the following network diagram, where the nodes A-K represent routers
+and lines represent conenctions between them:<br>
+<img src="//www.cs.virginia.edu/~cr4bd/4457/F2024/files/f2024week08graph1.svg" height="600"
+alwt="diagram with nodes labeled A through K, and the following links between them: A--B; B--C; C--D; D--E; A--E; A--F; F--G; F--H; G--H; C--I; I--J; J--K; D--I"></p>
+<div class='question' id='q1' slug='1143e0c7'><div class='description' id='d1'><strong>Question 1</strong> (4 points) (see above)
+<p>Suppose the routers are running a distance vector protocol using the split horizon method.
+Assuming all links have the same cost, which of the following sets of links going down could trigger
+the "count-to-infinity" problem?
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans1' value='8c791efd' /><div><p>A-B and C-D</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='ef763644' /><div><p>A-F and F-G</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='71b179a3' /><div><p>C-I and D-I</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='124ccfb2' /><div><p>D-E and B-C</p>
+</div></label></li></ol></div><div class='question' id='q2' slug='438ce2bc'><div class='description' id='d2'><strong>Question 2</strong> (4 points) (see above)
+<p>If the network uses distance vector routing with split horizon and
+a cost of 1 for each link and stablizes on the correct distances
+and next hops.
+Then, if the link from D to E went down and both D and E detect this, which of the following distance vector updates <em>must</em>
+be sent in order for E to eventually update its next hop for D to A (instead of directly to D)?
+(It's possible not all necessary distance vector updates are listed.)
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans2' value='9789bc93' /><div><p>B sending its distance vector to A</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='4cb8a559' /><div><p>A sending its distance vector to E</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='afdeb508' /><div><p>E sending its distance vector to A</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='92007ba8' /><div><p>I sending its distance vector to D</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='22ce9bb6' /><div><p>B sending its distance vector to C</p>
+</div></label></li></ol></div><div class='question' id='q3' slug='908145fd'><div class='description' id='d3'><strong>Question 3</strong> (3 points) (see above)
+<p>Suppose the network uses a link-state routing protocol. The link from D to E goes down
+and both D and E detect this.
+How many messages (minimum) must be exchanged for A to update its next hop to D to B (instead of <s>D</s>E)?
+Assume each time a router sends its (potentially new) information about links/nodes it knows about to its
+neighbors counts as one message, regardless of the number of pieces of information updated.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans3' /></div></div><div class='question' id='q4' slug='eac63aee'><div class='description' id='d4'><strong>Question 4</strong> (5 points) (see above)
+<p>In lecture, we mentioned that the OSPF protocol supports areas to limit the complexity of
+each routers state. Suppose one divide the routers into areas as follows:</p>
+
+<ul>
+<li>A, B, C, D, E are in area 0 (the backbone).</li>
+<li>C, D, I, J, K are in area 1.</li>
+<li>A, F, G, H are in area 2.</li>
+<li>C, D and are area border routers between areas 0 and 1, and A is an area border router between area 0 and area 2.</li>
+</ul>
+
+<p>Compared to when the network was not divided into multiple areas, ___. <strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans4' value='f7cee729' /><div><p>router A would have less information about the links adjacent to F</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='bebcd6f7' /><div><p>router B would have less information about the links adjacent to C</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='e6e9ff23' /><div><p>router G would have less information about the links adjacent to H</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='7d16f2fc' /><div><p>router I would have less information about the links adjacent to A</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='92743aa6' /><div><p>assuming all links had a cost metric of 1 unit, no routing tables would change</p>
+</div></label></li></ol></div></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 9</h1><div class='directions'></div><div class="multiquestion"><p>Suppose we have the following independently operated networks, each of which is its own autonomous system (AS):</p>
+
+<ul>
+<li>network A is assigned IP addresses 2001:db8:1::/40, 3fff:ff::/32</li>
+<li>network B is assigned IP addresses 2001:db8:2::/40</li>
+<li>network C is assigned IP addresses 2001:db8:3::/40</li>
+<li>network D is assigned IP addresses 3fff:aa::/32</li>
+<li>network E is assigned IP addresses 3fff:bb::/32</li>
+<li>network F is assigned IP addresses 3fff:cc::/32</li>
+</ul>
+
+<p>and</p>
+
+<ul>
+<li>network A peers with network B</li>
+<li>network C is a customer of network B</li>
+<li>network D is a customer of network C</li>
+<li>network E is a customer of networks B and C</li>
+<li>network F is a customer of network A</li>
+<li>network F peers with networks D and B</li>
+</ul>
+<div class='question' id='q1' slug='71d45222'><div class='description' id='d1'><strong>Question 1</strong> (4 points) (see above)
+<p>Network B will announce a route for 3fff:aa::/32 to network A. The AS path for this route will include ___.
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans1' value='d2f4e81b' /><div><p>network C</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='b38a566e' /><div><p>network D</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='52678f27' /><div><p>network E</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='43966cdf' /><div><p>network F</p>
+</div></label></li></ol></div><div class='question' id='q2' slug='c7725995'><div class='description' id='d2'><strong>Question 2</strong> (4 points) (see above)
+<p>Assume that when multiple routes are available,
+routes are chosen based on AS path length and no AS prepending (insertion of extra copies
+of an AS in to the AS-path) is done.
+When there are multiple routes tied for the shortest AS path length, some other
+criteria is used to decide between them.</p>
+
+<p>Traffic from network F to network C will go from network F to ____ and then to network C (and not through networks that are not mentioned).</p>
+</div><ol class="options"><li><label><input type='radio' name='ans2' value='9ec4accd' /><div><p>network D</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='951e585c' /><div><p>network B</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='f0d65611' /><div><p>network D or network B, depending on how routes are chosen when the AS path is the same</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='2d126114' /><div><p>network A and then network B</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='2ef0105b' /><div><p>network D; or network B; or network A and then network B; depending on how routes are chosen when the AS path is the same</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='6c60982c' /><div><p>none of the above (explain in comments)</p>
+</div></label></li></ol></div></div><div class='question' id='q3' slug='a90ce555'><div class='description' id='d3'><strong>Question 3</strong> (4 points)
+<p>Suppose an organization example.com has the following DNS zones,
+each of which is served by independent sets of DNS servers:</p>
+
+<ol>
+<li>example.com and foo.example.com and bar.example.com</li>
+<li>engineering.example.com and foo.engineering.example.com and bar.engineering.example.com and quux.example.com</li>
+<li>foo.engineering.example.com and bar.engineering.example.com and quux.foo.engineering.example.com</li>
+<li>omega.example.com and foo.omega.example.com</li>
+</ol>
+
+<p>Starting with the root server, we would expect a recursive resolver which does not do caching to make ____ queries
+to resolve an IPv6 address for <code>quux.foo.engineering.example.com</code>. List them briefly in the comments.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans3' /></div></div><div class='question' id='q4' slug='85bd9d0c'><div class='description' id='d4'><strong>Question 4</strong> (5 points)
+<p>Consider the following DNS response:</p>
+
+<pre><code>;; ANSWER SECTION:
+slashdot.org.           300     IN      A       172.64.151.192
+slashdot.org.           300     IN      A       104.18.36.64
+
+;; AUTHORITY SECTION:
+slashdot.org.           86400   IN      NS      ns41.constellix.net.
+slashdot.org.           86400   IN      NS      ns51.constellix.net.
+slashdot.org.           86400   IN      NS      ns61.constellix.net.
+slashdot.org.           86400   IN      NS      ns11.constellix.com.
+slashdot.org.           86400   IN      NS      ns21.constellix.com.
+slashdot.org.           86400   IN      NS      ns31.constellix.com.
+</code></pre>
+
+<p>Based on this response, it would be valid to ____.  <strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans4' value='f07bef8c' /><div><p>use the IP address "172.64.151.192" to contact slashdot.org ten minutes after receiving the response</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='0a2b1373' /><div><p>use the IP address "104.18.36.64" to contact slashdot.org four minutes after receiving the response</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='674c147c' /><div><p>contact "ns11.contellix.com" to obtain information about "slashdot.org" ten minutes after receiving the response</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='a1d17e17' /><div><p>contact "ns41.contellix.com" to obtain information about "foo.slashdot.org" three minutes after receiving the response</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='233d932e' /><div><p>contact "ns41.contellix.net" to obtain information about "ns51.contellix.net" three minutes after receiving the response</p>
+</div></label></li></ol></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 10</h1><div class='directions'></div><div class="multiquestion"><p>Consider the following Python code that uses sockets (assume appropriate libraries are <code>import</code>ed)</p>
+
+<pre><code>sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind(('10.11.12.13', 12345))
+sock.sendto(b'12345', ('11.12.13.14', 12345))
+data, (host, port) = sock.recvfrom(1000)
+</code></pre>
+<div class='question' id='q1' slug='6dca2bdc'><div class='description' id='d1'><strong>Question 1</strong> (5 points) (see above)
+<p>If this code runs to completion on a machine without crashing or hanging, then _____.
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans1' value='f1848aba' /><div><p>10.11.12.13 is one of that machine's IP addresses</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='bddaf13a' /><div><p>11.12.13.14 is one of that machine's IP addresses</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='7cbc8a96' /><div><p>at least three IP packets were sent by that machine in order to run the program</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='31866390' /><div><p><code>host</code> is <code>11.12.13.14</code> or something equivalent</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='087bbaf2' /><div><p>no other program on that machine is using port 12345 for a server</p>
+</div></label></li></ol></div><div class='question' id='q2' slug='2e4b7b85'><div class='description' id='d2'><strong>Question 2</strong> (4 points) (see above)
+<p>Suppose the <code>data</code> returned by the <code>recvfrom</code> call corresponds to a <code>sendto</code>
+call made by another program. Then, _____.
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans2' value='331d8be9' /><div><p>if the length of <code>data</code> is less than 1000 bytes, it is the same size as what was passed to <code>sendto</code></p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='05b2e646' /><div><p>the <em>other</em> program must have passed <code>12345</code> as part of its argument to <code>bind()</code></p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='6e9ce8e1' /><div><p>the <em>other</em> program must have passed <code>12345</code> as part of its argument to <code>sendto()</code></p>
+</div></label></li></ol></div></div><div class="multiquestion"><p>For the following questions, consider the following series of requests and responses made by an HTTP client to a single HTTP
+server, where <code>...</code> represent some values omitted for brevity. Assume that each request and
+response is made using a separate TCP connection and appropriate Content-Length headers
+are included when necessary.</p>
+
+<p>Request and response 1:</p>
+
+<pre><code>GET /foo HTTP/1.1
+Host: example.com
+
+HTTP/1.1 200 OK
+Content-Type: text/html
+Date: Wed, 30 Oct 2024 20:00:00 GMT
+Last-Modified: Wed, 30 Oct 2024 19:00:00 GMT
+Cache-Control: max-age=14400
+Content-Length: 23482
+
+...
+</code></pre>
+
+<p>Request and response 2:</p>
+
+<pre><code>PUT /bar HTTP/1.1
+Host: example.com
+Content-Type: application/json
+Content-Length: 2000
+
+...
+
+HTTP/1.1 200 OK
+Content-Type: text/html
+Date: Wed, 30 Oct 2024 20:00:00 GMT
+Last-Modified: Wed, 30 Oct 2024 19:30:00 GMT
+ETag: AbcdEfg
+Content-Length: 15989
+...
+
+...
+</code></pre>
+
+<p>Request and response 3:</p>
+
+<pre><code>GET /quux HTTP/1.1
+Host: example.com
+
+HTTP/1.1 303 See Other
+Location: https://a.different.website.example/quux
+Content-Type: text/html
+Date: Wed, 30 Oct 2024 20:00:01 GMT
+Last-Modified: Wed, 30 Oct 2024 19:45:00 GMT
+Cache-Control: max-age=86400
+ETag: QQQQ--4123
+Content-Length: ...
+
+...
+</code></pre>
+<div class='question' id='q3' slug='3eca37be'><div class='description' id='d3'><strong>Question 3</strong> (4 points) (see above)
+<p>Suppose the HTTP client needs is asked to make the same request to <code>/foo</code> again.
+Without making another request to the HTTP server, based on
+the information in the original response, it would be okay to return a cached version of the response ____.
+(If multiple answers are true, choose the answer that allows for the most caching.)</p>
+</div><ol class="options"><li><label><input type='radio' name='ans3' value='420c527f' /><div><p>always</p>
+</div></label></li><li><label><input type='radio' name='ans3' value='daf4bef1' /><div><p>if it is less than 1 hours after its initial request to <code>/foo</code></p>
+</div></label></li><li><label><input type='radio' name='ans3' value='51a4cf47' /><div><p>if it is less than 3 hours after its initial request to <code>/foo</code></p>
+</div></label></li><li><label><input type='radio' name='ans3' value='605345ba' /><div><p>if it is less than 4 hours after its initial request to <code>/foo</code></p>
+</div></label></li><li><label><input type='radio' name='ans3' value='5f37af28' /><div><p>never</p>
+</div></label></li><li><label><input type='radio' name='ans3' value='00288519' /><div><p>none of the above (explain in comments)</p>
+</div></label></li></ol></div><div class='question' id='q4' slug='e1fb04e2'><div class='description' id='d4'><strong>Question 4</strong> (4 points) (see above)
+<p>Assume that the client's HTTP requests take up:</p>
+
+<ul>
+<li>42 bytes for request 1</li>
+<li>2114 bytes for request 2</li>
+<li>43 bytes for request 3</li>
+</ul>
+
+<p>If the client can send TCP segments with at most 1380 bytes of data, then using HTTP/1.1 pipelining would save the client from sending ____ data 
+packets compared to using a single persistent connection without pipelining.
+(Do not account for resent data packets or include TCP packets the client sends that do not include data, like acknowledgments.
+Assume the client does not reorder the requests and that the client packs data into TCP packets in the most efficient possible way both with and without HTTP pipelining.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans4' /></div></div></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 11</h1><div class='directions'></div><div class="multiquestion"><p>Suppose an HTTP proxy receives a request for <code>https://other.com/foo</code>, forwards it to another HTTP server,
+then receives this response:</p>
+
+<pre><code>HTTP/1.1 302 Found
+Set-Cookie: lang=en
+Location: https://other.com/bar
+Cache-Control: max-age=3600
+Date: Wed, 06 Nov 2024 15:09:07 GMT
+Expires: Wed, 06 Nov 2024 16:09:07 GMT
+Content-Type: text/html
+Content-Length: 52
+
+Please see &lt;a href="https://other.com/bar"&gt;here&lt;/a&gt;.
+</code></pre>
+
+<p>(Assume CRLFs are used to seperate lines as appropriate throughout these questions.)</p>
+<div class='question' id='q1' slug='ec67a635'><div class='description' id='d1'><strong>Question 1</strong> (5 points) (see above)
+<p>The HTTP request the <strong>proxy</strong> received for <code>https://other.com/foo</code> could have looked like which of the following?
+(Assume requests are terminated by empty lines as appropriate.)</p>
+
+<p><strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans1' value='28697bb0' /><div><p><code>GET /foo HTTP/1.1</code><br><code>Host: other.com</code></p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='a47ac1d9' /><div><p><code>GET https://other.com/foo HTTP/1.1</code><br><code>Cookie: lang=es</code><br><code>Host: other.com</code></p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='366025aa' /><div><p><code>GET https://other.com/foo HTTP/1.1</code><br><code>Host: other.com</code></p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='3c46a91e' /><div><p><code>HEAD https://other.com/foo HTTP/1.1</code></p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='9135a1e6' /><div><p><code>POST https://other.com/foo HTTP/1.1</code><br><code>Cookie: lang=en</code><br><code>Host: other.com</code><br><code>Content-Type: application/json</code><br><code>Content-Length: 7</code><br><br><code>{"x":1}</code></p>
+</div></label></li></ol></div></div><div class='question' id='q2' slug='0ea6be98'><div class='description' id='d2'><strong>Question 2</strong> (4 points)
+<p>Suppose we wanted to provide a REST-style API to an alarm clock tool.
+This tool supports a set of alarms, which of each has a unique id number.</p>
+
+<p>Suppose this API supports making a <code>GET</code> request to  <code>/alarm/ID</code>,
+where <code>ID</code> represents the alarm's ID number
+to get a JSON document describing how the alarm is set (what time, repeating on what days, etc.)
+and its name.</p>
+
+<p>What way to change how an alarm is set would be most consistent with the REST philosophy?</p>
+</div><ol class="options"><li><label><input type='radio' name='ans2' value='85d951eb' /><div><p>making a <code>PUT</code> request to <code>/alarm</code> whose message body contains JSON, getting a new alarm ID from that request, then making a <code>DELETE</code> request to <code>/alarm/ID</code> for the old alarm ID</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='46213f14' /><div><p>making a <code>PUT</code> request to <code>/alarm/ID</code> whose message body contains JSON, using a similar format to what would be returned by the <code>GET</code> request</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='0f1b85a5' /><div><p>making a <code>PUT</code> request to <code>/alarm/ID</code> whose message body contains key-value pairs in the HTML form format of application/x-www-form-urlencoded specifying the new setting</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='68be0c6a' /><div><p>none of the above  (explain in comments)</p>
+</div></label></li></ol></div><div class="multiquestion"><p>Suppose we use the carrier-sense multiple access strategy over a shared wireless channel that nodes A, B, C, D are all participating.</p>
+
+<p>Assume A, B, C, and D can all receive wireless messages from each other on the shared channel and that if they ever transmit at the same time, their messages collide. Assume that the message propogation time is negligible.</p>
+
+<p>A, B, and C transmit messages that take 990 microseconds to send to D using the following protocol:</p>
+
+<ol>
+<li>they spend 9 microseconds listening for other transmissions;</li>
+<li>if there was no other transmission active, they then transmit 1 microseconds later;</li>
+<li>otherwise, they choose with 50% probability to either:
+
+<ul>
+<li>start transmitting immediately after the current transmission ends (without checking for other transmissions)</li>
+<li>wait 1000 microseconds after the current transmission endsand go back to the step 1</li>
+</ul></li>
+</ol>
+<div class='question' id='q3' slug='49ded493'><div class='description' id='d3'><strong>Question 3</strong> (4 points) (see above)
+<p>If A and B are both try to transmit a single message and no one else is transmitting,
+a collision will occur if they start the protocol above between ____ and
+____ microseconds of each other.</p>
+
+<p>Write your answer as two numbers separated by a comma. (example: "1,4")</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans3' /></div></div><div class='question' id='q4' slug='30e9b890'><div class='description' id='d4'><strong>Question 4</strong> (4 points) (see above)
+<p>If A and B start the above protocol while C (and no one else) is transmitting a particular packet
+so that step 1 detects another transmission,
+a collision will occur ____. <strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans4' value='24db77f3' /><div><p>only if A and B decided to start the protocol above with 500 microseconds of each other</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='b0bb7c22' /><div><p>if A and B both choose the first random option from step 3 of the protocol</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='80fc8ea6' /><div><p>if A and B both choose the second random option from step 3 of the protocol</p>
+</div></label></li><li><label><input type='checkbox' name='ans4' value='f4bfcf9d' /><div><p>if A chooses the first option and B chooses the second option from step 3 of the protocol</p>
+</div></label></li></ol></div></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 12</h1><div class='directions'></div><div class="multiquestion"><p>Suppose:</p>
+
+<ul>
+<li>A and B are both transmitting to C, but A and B cannot hear each other's transmissions.</li>
+<li>A and B send data packets that take 200 microseconds to send</li>
+<li>A and B and C use request-to-send/clear-to-send (RTS/CTS), where the request-to-send messages and clear-to-send messages take about 10 microseconds to send</li>
+<li>There is negligible signal propagation time between A and B and C.</li>
+</ul>
+<div class='question' id='q1' slug='4a67fe88'><div class='description' id='d1'><strong>Question 1</strong> (4 points) (see above)
+<p>Using RTS/CTS will add about ____ microseconds to the time needed to transmit messages when there are no collisions compared to not using it.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans1' /></div></div><div class='question' id='q2' slug='2ca2ba06'><div class='description' id='d2'><strong>Question 2</strong> (4 points) (see above)
+<p>Assuming only A and B are transmitting, using RTS/CTS will reduce the likelihood of collisions by a factor of about ___.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans2' /></div></div></div><div class="multiquestion"><p>Suppose we have a wifi network with three access points X, Y, and Z (and we are not using "ad-hoc" mode).</p>
+
+<p>Access point Z is connected to the Internet, access points X and Y do not have a direct Internet connection.
+To send packets between the access points or to the Internet, the access points use a mesh-style wireless network where:</p>
+
+<ul>
+<li>access point X can send or receive frames to or from access point Y but is out of range of access point Z</li>
+<li>access point Y can send or receive frames to or from access point Z</li>
+</ul>
+
+<p>The mesh-style network uses wifi-style carrier-sense and collision avoidance (without RTS/CTS).</p>
+<div class='question' id='q3' slug='be04eb7a'><div class='description' id='d3'><strong>Question 3</strong> (4 points) (see above)
+<p>Suppose node A:</p>
+
+<ul>
+<li>is currently associated with access point X,</li>
+<li>is in radio range to send or receive from access point Y.</li>
+</ul>
+
+<p>and node B:</p>
+
+<ul>
+<li>is currently associated with access point Z,</li>
+<li>is in radio range to send or receive from access point Y.</li>
+</ul>
+
+<p>When node A sends a packet to node B, this will result in ____ wireless frames being sent.
+(Do not count link-layer acknowledgments or similar control frames.)</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans3' /></div></div><div class='question' id='q4' slug='17f8a447'><div class='description' id='d4'><strong>Question 4</strong> (4 points) (see above)
+<p>Suppose all the wireless nodes use the same channel. If X is sending a stream of data to Z, then, neglecting frame overhead,
+time taken to get acknowledgments, and minimum intervals between frames, the expected maximum data rate of this stream would be around ____.
+(If the answer is near a boundary, choose either side.)</p>
+</div><ol class="options"><li><label><input type='radio' name='ans4' value='b711de14' /><div><p>80 to 100% of the channel's capacity</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='d630ef6f' /><div><p>60 to 80% of the channel's capacity</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='ad4f841a' /><div><p>40 to 60% of the channel's capacity</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='0a6e5aa7' /><div><p>20 to 40% of the channel's capacity</p>
+</div></label></li><li><label><input type='radio' name='ans4' value='43a44933' /><div><p>0 to 20% of the channel's capacity</p>
+</div></label></li></ol></div></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 13</h1><div class='directions'></div><div class='question' id='q1' slug='1b7ec297'><div class='description' id='d1'><strong>Question 1</strong> (4 points)
+<p>Consider a simple version of a centrally scheduled wireless network where
+a single base station assigns clients slots at different times.</p>
+
+<p>Suppose:</p>
+
+<ul>
+<li>each slot uses the same frequency and lasts for 500 microseconds, and there are 3 slots during a transmission time interval</li>
+<li>there are three clients A, B, and C, with the following propagation delays between each and the base station:
+
+<ul>
+<li>A:  30 microseconds to base station, 40 microseconds to B, 50 microseconds to C</li>
+<li>B:  20 microseconds to base station, 40 microseconds to A, 20 microseconds to C</li>
+<li>C:  50 microseconds to base station, 70 microseconds to A, 20 microseconds to B</li>
+</ul></li>
+<li>nodes always communicate through the base station</li>
+</ul>
+
+<p>If A is assigned the first slot, B the second, and C the third, and each has a message to transmit
+to the base station, then B should start transmitting roughly ____ microseconds after A starts transmitting.
+If not enough information is provided right "unknown" and explain briefly in the comments.</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans1' /></div></div><div class='question' id='q2' slug='19459a7b'><div class='description' id='d2'><strong>Question 2</strong> (4 points)
+<p>Suppose a webserver is running on port 80 (for HTTP) 
+on IP address 10.0.0.2.
+A system administrator erroneously configures the following firewall
+rules (written in NFTables style):</p>
+
+<pre><code>tcp dport 80 accept
+drop
+</code></pre>
+
+<p>After these erroneous rules are in place, what is the system administrator
+likely to observe on 10.0.0.2?</p>
+</div><ol class="options"><li><label><input type='radio' name='ans2' value='d57ade44' /><div><p>no TCP connection attempts at all were received on 10.0.0.2</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='accf9c93' /><div><p>TCP connections to port 80 were established but no HTTP requests were received for them</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='2fc241f9' /><div><p>TCP connections to port 80 were established but the webserver timed out when attempting to send HTTP responses for them</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='4a307fdf' /><div><p>TCP connections to port 80 were stuck in an unestablished state and then timed out, never completing a TCP handshake</p>
+</div></label></li><li><label><input type='radio' name='ans2' value='2fa83d03' /><div><p>none of the above (explain in comments)</p>
+</div></label></li></ol></div><div class='question' id='q3' slug='50453b51'><div class='description' id='d3'><strong>Question 3</strong> (4 points)
+<p>For tracking TCP connections, we mentioned the idea of adding an entry to a connection table
+when there is a SYN packet from A to B, indicating that there is a connection from A to B.
+Some firewalls also add an entry for a connection from an internal address A to
+an external address B when there is no prior connection in the table, but they see
+a TCP data data or acknowledgment packet sent from A to B.</p>
+
+<p>Suppose the firewall uses these connection tables to drop packets that are not part
+of TCP connections either made by the internal network or made to a small list
+of servers on the internal network.</p>
+
+<p>How would this change likely improve or hurt the firewall's performance?
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans3' value='58d9468e' /><div><p>it would allow more servers running on internal addresses to accept incoming TCP connections</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='f8a35675' /><div><p>it would disrupt fewer connections if the firewall is restarted and its connection table is reset</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='76d69860' /><div><p>it would handle protocols with separate control and data connections more accurately</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='20f30af1' /><div><p>it would prevent some connections that are supposed to be permitted in the firewall rules from failing when they would otherwise when the firewall's timeouts are shorter than the end hosts'</p>
+</div></label></li></ol></div><div class="multiquestion"><p>Suppose a network address translation system:</p>
+
+<ul>
+<li>has <strong>two</strong> external (public) IPv4 addresses 203.0.113.45 and 203.0.113.46,</li>
+<li>only uses local port numbers greater than 1023, and</li>
+<li>uses endpoint-independent mappings</li>
+</ul>
+<div class='question' id='q4' slug='aec3a0a2'><div class='description' id='d4'><strong>Question 4</strong> (4 points) (see above)
+<p>Suppose all the hosts on the private network try to simulatenously
+open 10 TCP connections to 192.0.2.1 port 80 from their private IP address and ports
+5000 through 5009, inclusive.</p>
+
+<p>If all of these connections suceeed, what is the maximum number
+of hosts that could be on the private network?</p>
+</div><div class='tinput text'><span>Answer:</span><input type='text' name='ans4' /></div></div></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+﻿
+<h1 style='text-align:center'>quiz for week 14</h1><div class='directions'></div><div class='question' id='q1' slug='ab3fa0e9'><div class='description' id='d1'><strong>Question 1</strong> (4 points)
+<p>Suppose we want a web browser on host A to connect to host C through host B.
+Which of the following is possible if we do this by running a SOCKS proxy
+on host B <strong><em>and</em></strong> is <strong>not</strong> possible if we do this by running an HTTP proxy
+on host B?
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans1' value='4c6bd59c' /><div><p>the web browser and web server can use a more recent HTTP version than the proxy understands</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='da4628da' /><div><p>the web browser and web server can use TCP features like ECN even if the proxy does not understand them</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='8706f753' /><div><p>the connection from the web browser to the proxy could be compressed when the connection from the proxy to the server is not</p>
+</div></label></li><li><label><input type='checkbox' name='ans1' value='0184aaf1' /><div><p>the proxy could avoid sending requests to the server sometimes by using a cached version</p>
+</div></label></li></ol></div><div class='question' id='q2' slug='ed7c899f'><div class='description' id='d2'><strong>Question 2</strong> (5 points)
+<p>Suppose an application makes a TCP connection to a remote server made through a SOCKS proxy.</p>
+
+<p>In this setup, the application has a TCP socket connecting it to the SOCKS proxy,
+and the SOCKS proxy has two TCP sockets: one for its connection to the client
+and one for its connection to the remote server.
+Assume the SOCKS proxy is implemented by send()ing and recv()ing on its
+TCP sockets using the standard sockets API. (The proxy does not explicitly
+control what TCP acknowledgments/etc. are sent.)</p>
+
+<p>After the connection setup, the application detects that all the data on
+its TCP socket to the SOCKS proxy has been acknowledged.
+Then, it waits a short amount of time and closes the connection.
+Which of the following is true about this situation?
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans2' value='e81d112a' /><div><p>any data the remote server sent that the client didn't receive before closing its connection will not be acknowledged from the perspective of the remote server</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='43f7c757' /><div><p>assuming there are no failures, all the data the client sent will be received by the remote server before it detects the connection is closed</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='571da6a5' /><div><p>if there are were failures in sending the application's data to the server, the application can detect this through the close operation returning an error</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='5b13214c' /><div><p>in the short amount of time between when the application detected all data was acknowledged and when it closed the connection, no TCP packets containing data were sent from the proxy to the remote server</p>
+</div></label></li><li><label><input type='checkbox' name='ans2' value='96beb537' /><div><p>the source port number of the packets sent for the client's TCP socket will be the same as the source port number for TCP packets received by the remote server</p>
+</div></label></li></ol></div><div class='question' id='q3' slug='597b7b45'><div class='description' id='d3'><strong>Question 3</strong> (4 points)
+<p>Suppose we use configure virtual Ethernet device, like a Linux <code>tap</code> device,
+to send IP packets from a laptop through a tunnel to
+a remote corporate network. We then run a tunneling program that opens this virtual Ethernet
+device to implement the tunnel.
+The laptop has a Wifi connection to the Internet.</p>
+
+<p>We configure the system so the tunnel is used by default for all IP-based connections and packets.</p>
+
+<p>When we do this, ____.
+<strong>Select all that apply.</strong></p>
+</div><ol class="options"><li><label><input type='checkbox' name='ans3' value='b42e399b' /><div><p>applications must use different port numbers than they would use without the tunnel configured</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='38988e1c' /><div><p>packets using the tunnel will be handled entirely by the kernel, probably in kernel mode</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='984fccba' /><div><p>sockets that use the tunnel are likely to have a different local IP address than sockets that use the Wifi connection directly</p>
+</div></label></li><li><label><input type='checkbox' name='ans3' value='a6a1b621' /><div><p>the system runs applications so they use a different version of socket API functions like <code>connect</code></p>
+</div></label></li></ol></div><div class='explanation'><a href='.&showkey'>click here to preview key</a></div><a style="text-align:center; display:block;" href="https://www.cs.virginia.edu/~cr4bd/4457/F2024/">Return to course page</a></center><a href="." style="text-align:center; display:block;">Return to index</a>
+<!--<center><a href="../">Return to course page</a></center>-->
+</body>
+</html>
+
+
+    </body>
+    </html>
+    

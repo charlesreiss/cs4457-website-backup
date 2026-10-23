@@ -1,0 +1,64 @@
+
+Length: 217
+Transaction ID: 0x8e57
+Flags: 0x8400 Standard query response, No error
+    1... .... .... .... = Response: Message is a response
+    .000 0... .... .... = Opcode: Standard query (0)
+    .... .1.. .... .... = Authoritative: Server is an authority for domain
+    .... ..0. .... .... = Truncated: Message is not truncated
+    .... ...0 .... .... = Recursion desired: Don't do query recursively
+    .... .... 0... .... = Recursion available: Server can't do recursive queries
+    .... .... .0.. .... = Z: reserved (0)
+    .... .... ..0. .... = Answer authenticated: Answer/authority portion was not authenticated by the server
+    .... .... ...0 .... = Non-authenticated data: Unacceptable
+    .... .... .... 0000 = Reply code: No error (0)
+Questions: 1
+Answer RRs: 0
+Authority RRs: 2
+Additional RRs: 3
+Queries
+    something.other.foo.example: type A, class IN
+        Name: something.other.foo.example
+        [Name Length: 27]
+        [Label Count: 4]
+        Type: A (Host Address) (1)
+        Class: IN (0x0001)
+Authoritative nameservers
+    other.foo.example: type NS, class IN, ns foo.ns.com
+        Name: other.foo.example
+        Type: NS (authoritative Name Server) (2)
+        Class: IN (0x0001)
+        Time to live: 1000 (16 minutes, 40 seconds)
+        Data length: 12
+        Name Server: foo.ns.com
+    other.foo.example: type NS, class IN, ns bar.ns.com
+        Name: other.foo.example
+        Type: NS (authoritative Name Server) (2)
+        Class: IN (0x0001)
+        Time to live: 1000 (16 minutes, 40 seconds)
+        Data length: 12
+        Name Server: bar.ns.com
+Additional records
+    foo.ns.com: type A, class IN, addr 4.5.6.7
+        Name: foo.ns.com
+        Type: A (Host Address) (1)
+        Class: IN (0x0001)
+        Time to live: 1000 (16 minutes, 40 seconds)
+        Data length: 4
+        Address: 4.5.6.7
+    bar.ns.com: type A, class IN, addr 8.9.10.11
+        Name: bar.ns.com
+        Type: A (Host Address) (1)
+        Class: IN (0x0001)
+        Time to live: 1000 (16 minutes, 40 seconds)
+        Data length: 4
+        Address: 8.9.10.11
+    bar.ns.com: type AAAA, class IN, addr 2607:db8::1
+        Name: bar.ns.com
+        Type: AAAA (IPv6 Address) (28)
+        Class: IN (0x0001)
+        Time to live: 1000 (16 minutes, 40 seconds)
+        Data length: 16
+        AAAA Address: 2607:db8::1
+[Unsolicited: True]
+

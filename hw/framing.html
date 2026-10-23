@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Framing | CS 4457 Fall 2026</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Framing" />
+<meta name="author" content="Charles Reiss" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://charlesreiss.github.io/cs4457-website-backup/hw/framing.html" />
+<meta property="og:url" content="https://charlesreiss.github.io/cs4457-website-backup/hw/framing.html" />
+<meta property="og:site_name" content="CS 4457 Fall 2026" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Framing" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Charles Reiss"},"headline":"Framing","url":"https://charlesreiss.github.io/cs4457-website-backup/hw/framing.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cs4457-website-backup/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://charlesreiss.github.io/cs4457-website-backup/feed.xml" title="CS 4457 Fall 2026" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/cs4457-website-backup/">CS 4457 Fall 2026</a>
+
+    <nav class="site-nav" aria-label="Site Menu">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger"><a class="page-link" href="/cs4457-website-backup/exams.html"  
+          >Study Materials</a><a class="page-link" href="/cs4457-website-backup/"  
+          >Main Page</a><a class="page-link" href="/cs4457-website-backup/oh.html"  
+          >Office Hours</a><a class="page-link" href="/cs4457-website-backup/policies.html"  
+          >Policies</a><a class="page-link" href="/cs4457-website-backup/assignments.html"  
+          >Homeworks</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/quizzes/">Quizzes</a><a class="page-link" target="_top" 
+          href="https://kytos02.cs.virginia.edu/cs4457-fall2025/submit/">Submission</a><a class="page-link" href="/cs4457-website-backup/schedule.html"  
+          >Schedule</a></div>
+    </nav>
+
+  </div>
+
+  <!-- <div class="oldsite">This website may change (perhaps significantly) before the semester starts.</div> -->
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <nav id="toc" aria-label="Table of Contents"><ul>
+<li><a href="#your-task" id="toc-your-task"><span
+class="toc-section-number">1</span> Your Task</a></li>
+<li><a href="#hints" id="toc-hints"><span
+class="toc-section-number">2</span> Hints</a></li>
+</ul></nav>
+<div class="changelog">
+<p>Changelog:</p>
+<ul>
+<li>28 August 2025: fix bug in <code>test.py</code>’s parsing for the
+<code>send</code> command where it only read the first byte in the hex
+or binary formats</li>
+</ul>
+</div>
+<blockquote>
+<p>If you downloaded the skeleton code before 28 August 2025 around
+9:30pm, the <code>test.py</code> had a bug in the <code>send</code>
+command; you can download an updated version of test.py <a
+href="files/framing/test.py">here</a>.</p>
+</blockquote>
+<h1 data-number="1" id="your-task"><span
+class="header-section-number">1</span> Your Task</h1>
+<ol type="1">
+<li><p>Download the supplied skeleton code at <a
+href="files/framing-skeleton.tgz">here</a>.<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+(last update 28 August 2025)</p></li>
+<li><p>In <code>sendrecv.py</code> complete an implementation of
+MySender and MyReceiver.</p>
+<p>In MySender’s <code>send_message</code> function, receive a message
+in bytes, then format a message to be sent as a sequence of bits, then
+call <code>self.channel.send_bits()</code> with those bytes.</p>
+<p>In MyReceiver’s <code>handle_bit_from_network</code> function,
+receive a bit from the network, then call
+<code>self.got_message_function()</code> when those bytes represent a
+full message passed to <code>MySender</code>’s <code>send_message</code>
+function.</p>
+<p>To demonstrate the interface, we supply an example implementation
+which is partially functional. It transmits messages by converting each
+byte into bits, and adding a nul byte to separate messages. This
+satisfies some but not all of the requirements below.</p>
+<p>Your implementation must:</p>
+<ol type="1">
+<li><p>Be able to send messages of any length between 0 and 1023 bytes,
+inclusive</p></li>
+<li><p>Allow messages to contain any sequence of bytes (of an
+appropriate length).</p>
+<p>(This means that, for example, we should be able to take some of the
+bits your <code>send_message</code> function produces and send a new
+message containing them without it being corrupted.)</p></li>
+<li><p>If a message’s bytes are corrupted, by changing the values of
+bits randomly and/or adding and removing bits randomly, then:</p>
+<ol type="1">
+<li><p>You should detect this and avoid calling
+<code>got_message_function</code> with data that does not represent a
+valid message at least 99.99% of the time. You should be able to achieve
+this with a 2 or more-byte checksum.</p></li>
+<li><p>Other than possibly the next few messages or couple kilobytes of
+messages, future uncorrupted messages should be received correctly
+(regardless of where the corruption took place).</p></li>
+</ol></li>
+<li><p>Not use too much space to send messages:</p>
+<ul>
+<li>Including any headers/separators, the average size of a random
+message of N bytes at most 120 bytes or N * 1.2 bytes, whichever is
+larger. (It’s okay if some pathological messages take up more
+space.)</li>
+</ul></li>
+<li><p>Be your own code and use only functionality built-in to python or
+supplied as part of its standard library. This means that it <em>is</em>
+permissible to use the <code>zlib</code> module’s <a
+href="https://docs.python.org/3/library/zlib.html#zlib.crc32"><code>crc32</code>
+function</a> and the <a
+href="https://docs.python.org/3/library/hashlib.html"><code>hashlib</code>
+module</a> and the <a
+href="https://docs.python.org/3/library/struct.html"><code>struct</code>
+module</a>. But it is <em>not</em> permissible to use, for example, <a
+href="https://pypi.org/project/python-pppd/">python-pppd</a></p></li>
+</ol></li>
+<li><p>Test your implementation using <code>test.py</code>:</p>
+<blockquote>
+<p>If you downloaded <code>test.py</code> before 28 August 2025 around
+9:30pm, you should get <a href="files/framing/test.py">an updated
+test.py</a> to fix a bug with reading hex/binary input for
+<code>send</code>.</p>
+</blockquote>
+<ul>
+<li><p>You can use <code>python3 test.py send ...</code> to send sample
+messages:</p>
+<pre><code> python3 test.py send --input-format binary --output-format binary 00001111 11110000
+
+ python3 test.py send --input-format hex --output-format hex FF00FF00 809080908090</code></pre></li>
+<li><p>You can use <code>python3 test.py recv ...</code> to receive
+bits:</p>
+<pre><code> python3 test.py recv --input-format binary --output-format binary 111100011110000111111
+ python3 test.py recv --input-format hex --output-format hex FF00FFFFFFF</code></pre></li>
+<li><p>You can use <code>python3 test.py suite ...</code> to run a test
+suite:</p>
+<pre><code> python3 test.py suite
+ python3 test.py suite --verbose</code></pre></li>
+<li><p>You can specify to only run parts of test suites by passing a <a
+href="https://docs.python.org/3/howto/regex.html#regex-howto">regular
+expression</a> to –only-test and/or –only-subtest:</p>
+<pre><code> python3 test.py suite --only-test=empty-clean
+ python3 test.py suite --only-test=tiny.*
+ python3 test.py suite --only-test=corrupt-first-recovery-tiny1 --only-subtest=&#39;delete bit #.*&#39;
+ python3 test.py suite --only-test=corrupt-first-recovery-tiny1 --only-subtest=&#39;delete bit #2&#39;</code></pre></li>
+</ul>
+<p>If you want to run additional tests, you might find it useful to
+modify the list of tests in <code>TESTS</code>.</p>
+<p>When grading, we may run additional tests and/or inspect your code by
+hand. Although the supplied tests do not intentionally omit
+functionality you must implement, they may get <q>unlucky</q> and fail
+to detect an implementation which is actually broken and they do not
+test everything for all possible message sizes. (Also, because some
+requirements deal with chances of corruption, it may be possible for
+them to spuriously fail on a correct implementation, though I think that
+is unlikely.)</p></li>
+<li><p><em>Briefly</em> document in a comment or docstring near the top
+of your <code>sendrecv.py</code> the frame format you choose.</p></li>
+<li><p>Submit your <code>sendrecv.py</code> by using the submission
+site.</p></li>
+</ol>
+<h1 data-number="2" id="hints"><span
+class="header-section-number">2</span> Hints</h1>
+<ol type="1">
+<li><p>You can reuse the supplied bit to byte and byte to bit
+conversions..</p></li>
+<li><p>The <code>struct</code> modules <code>pack</code> or
+<code>unpack</code> to convert integers to bytes and
+vice-versa.</p></li>
+<li><p>Be careful about choosing ambiguous message delimters.</p>
+<p>For example, let’s say you choose 0000 as a delimiter for messages
+and to escape 000 with 0001 and we try to send the message
+111111100.</p>
+<p>In this case, we’ll send 111111100 0000. There was no reason to
+escape anything. When we try to remove the delimiter from this, we’ll
+find the first 0000, and get 1111111, which is not our original
+message.</p>
+<p>The problem here is that the escaping is not sufficient to handle the
+end-of-message edge case. We could fix this by escaping every 0 instead
+of every 000, but that’s pretty inefficient. A more space-efficient
+solution is to choose a delimiter pattern that has a distinctive
+transition from 0s to 1s that allows us to escape less frequently. The
+choice of 010 in lecture and 01111110 in the textbook (Systems Approach
+section 2.3) are examples of this.</p></li>
+</ol>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you want to work on portal or similar, you might find
+it useful to right-click the link, select <q>copy link</q> or <q>copy
+URL</q> from the drop-down menu, then run the command
+<code>wget THAT_URL</code>, where <code>THAT_URL</code> is the result of
+pasting the link/URL.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cs4457-website-backup/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS 4457 Fall 2026</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Charles Reiss</li><li><a class="u-email" href="mailto:creiss@virginia.edu">creiss@virginia.edu</a></li></ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        By Charles Reiss.
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
